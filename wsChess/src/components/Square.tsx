@@ -1,4 +1,3 @@
-import PieceComponent from "./Piece";
 import type { SquareProps } from '../types';
 
 const Square: React.FC<SquareProps> = ({ row, col, piece, onClick }) => {
@@ -10,7 +9,17 @@ const Square: React.FC<SquareProps> = ({ row, col, piece, onClick }) => {
       }`}
       onClick={() => onClick(row, col)}
     >
-      <PieceComponent piece={piece} row={row} col={col} onClick={onClick} />
+      {piece?.image ? (
+        <img
+          src={piece.image}
+          alt={`${piece.color} ${piece.type}`}
+          className="w-16 h-auto"
+        />
+      ) : piece ? (
+        <span>{`${piece.color} ${piece.type}`}</span> 
+      ) : (
+        ''
+      )}
     </div>
   );
 };

@@ -5,6 +5,7 @@ export type Color = "white" | "black";
 export interface Piece {
   type: PieceType;
   color: Color;
+  image?: string; 
 }
 
 export interface BoardState {

@@ -6,7 +6,7 @@ const Chessboard: React.FC<{
   onClick: (row: number, col: number) => void;
 }> = ({ board, onClick }) => {
   return (
-    <div className="grid grid-cols-8 gap-0 w-[700px] border-white border">
+    <div className="select-none grid grid-cols-8 gap-0 w-[700px] border-white border">
       {board.map((row, i) =>
         row.map((piece, j) => (
           <Square
