@@ -4,8 +4,8 @@ const Square: React.FC<SquareProps> = ({ row, col, piece, onClick }) => {
   const isLight = (row + col) % 2 === 0;
   return (
     <div
-      className={`w-21 h-21 flex items-center justify-center ${
-        isLight ? "bg-[#313033]" : "bg-[#181818]"
+      className={`w-22 h-22 flex items-center justify-center ${
+        isLight ? "bg-[#dfdfdf]" : "bg-[#7084b6]"
       }`}
       onClick={() => onClick(row, col)}
     >
