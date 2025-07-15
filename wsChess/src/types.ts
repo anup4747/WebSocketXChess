@@ -8,10 +8,17 @@ export interface Piece {
   image?: string; 
 }
 
-export interface BoardState {
+export interface boardStateProp {
   board: (Piece | null)[][];
   selected: { row: number; col: number } | null;
   turn: "white" | "black";
+}
+
+export interface ChessboardProps {
+  board: (Piece | null)[][];
+  onClick: (row: number, col: number) => void;
+  selected: { row: number; col: number } | null;
+  validMoves: { row: number; col: number }[];
 }
 
 export interface SquareProps {
@@ -19,4 +26,10 @@ export interface SquareProps {
   col: number;
   piece: Piece | null;
   onClick: (row: number, col: number) => void;
+}
+
+export interface ExtendedSquareProps extends SquareProps {
+  selected: { row: number; col: number } | null;
+  isValidMove?: boolean; // valid move highlighting
+  isSelected?: boolean  // check if it is seclected
 }

@@ -1,0 +1,15 @@
+bugs 
+if blank or no piece square is selected and place it on the piece it will remove
+
+TO DO'S 
+
+- highlight the each path of each piece and provide restriction to each pices to move as rules
+- add gsap
+- add points
+- add section of which pieces are removed or killed 
+- add timer (optional)
+
+- add websocket
+- create a room to play with websocket
+- if user is offline for 1 min it will stay still and then the room will deleted automatically afterwards
+- add username to top name and store it to localhost if localhost doesn't have it then it should enter and also and in future he/she can edit it
