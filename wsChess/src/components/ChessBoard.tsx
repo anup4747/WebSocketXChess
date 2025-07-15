@@ -26,8 +26,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ board, onClick, selected , vali
   );
 };
 
-
-// Pawn move logic
+// highlighting the path
 export const getValidPawnMoves = (
     row: number,
     col: number,
@@ -37,7 +36,7 @@ export const getValidPawnMoves = (
     
     const moves : {row: number, col:number}[] = [];
     const direction = piece.color === "white" ? -1 : 1 // white moves up, black moves down
-    const startRow = piece.color  === "black" ? 6 : 1 // starting row for white or black pawns
+    const startRow = piece.color  === "white" ? 6 : 1 // starting row for white or black pawns
 
     // forward move (1 square)
     if(board[row + direction]?.[col] === null){
@@ -45,22 +44,27 @@ export const getValidPawnMoves = (
     }
 
     // forward move (2 square)
-    if(row === startRow && board[row + direction]?.[col] === null && board[row+ 2 * direction]?.[col] === null){
-      moves.push({row: row + direction,col})
+    if(row === startRow && board[row + direction]?.[col] === null && board[row+ direction + direction]?.[col] === null){
+      moves.push({row: row + direction + direction,col})
     }
 
     // diagonal moves
     if(
+      row !== startRow &&
       board[row + direction]?.[col - 1]?.color !== piece.color &&
       board[row + direction]?.[col - 1] !== null
     ){
-       moves.push({ row: row + direction, col: col - 1 });
+      moves.push({ row: row + direction, col: col - 1 });
     }
+
+    console.log(board[row + direction]?.[col - 1] !== null)
+
     if(
+      row !== startRow &&
       board[row + direction]?.[col + 1]?.color !== piece.color &&
       board[row + direction]?.[col + 1] !== null
     ){
-       moves.push({ row: row + direction, col: col + 1 });
+      moves.push({ row: row + direction, col: col + 1 });
     }
 
     return moves;
