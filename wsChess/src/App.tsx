@@ -3,7 +3,8 @@ import Chessboard, {
   getValidPawnMoves,
   getValidRookMoves,
   getValidKnightMoves,
-  getValidBishopMoves
+  getValidBishopMoves,
+  getValidQueenMoves
 } from "./components/ChessBoard";
 import Controls from "./components/Control";
 import React from "react";
@@ -28,13 +29,13 @@ const App: React.FC = () => {
       if (!state.selected) {
         if (state.board[row][col]?.type == "pawn") {
           // Calculates the valid pawn moves
-          const pawnMoves = getValidPawnMoves(
+          const pawnValidMoves = getValidPawnMoves(
             row,
             col,
             state.board[row][col]!,
             state.board
           );
-          setValidMoves(pawnMoves);
+          setValidMoves(pawnValidMoves);
         } else if (state.board[row][col]?.type === "rook") {
           // Calculate valid rook moves
           const hookMoves = getValidRookMoves(
@@ -46,22 +47,31 @@ const App: React.FC = () => {
           setValidMoves(hookMoves);
         } else if (state.board[row][col]?.type === "knight") {
           // Calculate valid knight moves
-          const knightMoves = getValidKnightMoves(
+          const knightValidMoves = getValidKnightMoves(
             row,
             col,
             state.board[row][col]!,
             state.board
           );
-          setValidMoves(knightMoves);
+          setValidMoves(knightValidMoves);
         } else if (state.board[row][col]?.type === "bishop") {
           // Calculate valid knight moves
-          const bishopMoves = getValidBishopMoves(
+          const bishopValidMoves = getValidBishopMoves(
             row,
             col,
             state.board[row][col]!,
             state.board
           );
-          setValidMoves(bishopMoves);
+          setValidMoves(bishopValidMoves);
+        } else if (state.board[row][col]?.type === "queen") {
+          // Calculate valid knight moves
+          const queenValidMoves = getValidQueenMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(queenValidMoves);
         }   
         else {
           setValidMoves([]); 

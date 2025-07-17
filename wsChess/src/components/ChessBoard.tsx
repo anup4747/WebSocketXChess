@@ -135,7 +135,7 @@ export const getValidRookMoves = (
 
   return moves;
 };
-// highlighting the valid knight path
+// highlighting the valid bishop path
 export const getValidBishopMoves = (
   row: number,
   col: number,
@@ -194,6 +194,7 @@ export const getValidBishopMoves = (
 
   return moves;
 };
+// highlighting the valid knight path
 export const getValidKnightMoves = (
   row: number,
   col: number,
@@ -229,5 +230,110 @@ export const getValidKnightMoves = (
   }
   return moves;
 };
+// highlighting the valid queen path
+export const getValidQueenMoves = (
+  row: number,
+  col: number,
+  piece: Piece,
+  board: (Piece | null)[][]
+): { row: number; col: number }[] => {
+  const moves: { row: number; col: number }[] = [];
+  // Horizontal moves (left)
+  for (let c = col - 1; c >= 0; c--) {
+    if (board[row][c] === null) {
+      moves.push({ row, col: c });
+    } else if (board[row][c]?.color !== piece.color) {
+      moves.push({ row, col: c }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
 
+  // Horizontal moves (right)
+  for (let c = col + 1; c < 8; c++) {
+    if (board[row][c] === null) {
+      moves.push({ row, col: c });
+    } else if (board[row][c]?.color !== piece.color) {
+      moves.push({ row, col: c }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // Vertical moves (up)
+  for (let r = row - 1; r >= 0; r--) {
+    if (board[r][col] === null) {
+      moves.push({ row: r, col });
+    } else if (board[r][col]?.color !== piece.color) {
+      moves.push({ row: r, col }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // Vertical moves (down)
+  for (let r = row + 1; r < 8; r++) {
+    if (board[r][col] === null) {
+      moves.push({ row: r, col });
+    } else if (board[r][col]?.color !== piece.color) {
+      moves.push({ row: r, col }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (up-right: row decreases, col increases)
+  for (let i = 1; row - i >= 0 && col + i < 8; i++) {
+    if (board[row - i][col + i] === null) {
+      moves.push({ row: row - i, col: col + i });
+    } else if (board[row - i][col + i]?.color !== piece.color) {
+      moves.push({ row: row - i, col: col + i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (up-left: row decreases, col decreases)
+  for (let i = 1; row - i >= 0 && col - i >= 0; i++) {
+    if (board[row - i][col - i] === null) {
+      moves.push({ row: row - i, col: col - i });
+    } else if (board[row - i][col - i]?.color !== piece.color) {
+      moves.push({ row: row - i, col: col - i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (down-right: row increases, col increases)
+  for (let i = 1; row + i < 8 && col + i < 8; i++) {
+    if (board[row + i][col + i] === null) {
+      moves.push({ row: row + i, col: col + i });
+    } else if (board[row + i][col + i]?.color !== piece.color) {
+      moves.push({ row: row + i, col: col + i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (down-left: row increases, col decreases)
+  for (let i = 1; row + i < 8 && col - i >= 0; i++) {
+    if (board[row + i][col - i] === null) {
+      moves.push({ row: row + i, col: col - i });
+    } else if (board[row + i][col - i]?.color !== piece.color) {
+      moves.push({ row: row + i, col: col - i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  return moves;
+};
 export default Chessboard;
