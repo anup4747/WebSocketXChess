@@ -1,25 +1,124 @@
 import Square from "./Square";
 import type { Piece } from "../types";
 import type { ChessboardProps } from "../types";
+import type { boardStateProp } from "../types";
+import React, { useState } from "react";
+import { initialBoard } from "../utils/initialBoardState";
 
-const Chessboard: React.FC<ChessboardProps> = ({
-  board,
-  onClick,
-  selected,
-  validMoves,
-}) => {
+
+const Chessboard: React.FC<ChessboardProps> = ({ selected }) => {
+  const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
+    []
+  );
+
+  const [boardState, setBoardState] = React.useState<boardStateProp>({
+    board: initialBoard,
+    selected: null,
+    turn: "white",
+  });
+
+  const handleClick = (row: number, col: number) => {
+    // console.log(boardState.board[row][col]?.type , boardState.board[row][col]?.color);
+    setBoardState((state) => {
+      if (!state.selected) {
+        if (state.board[row][col]?.type == "pawn") {
+          // Calculates the valid pawn moves
+          const pawnValidMoves = getValidPawnMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(pawnValidMoves);
+        } else if (state.board[row][col]?.type === "rook") {
+          // Calculate valid rook moves
+          const hookMoves = getValidRookMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(hookMoves);
+        } else if (state.board[row][col]?.type === "knight") {
+          // Calculate valid knight moves
+          const knightValidMoves = getValidKnightMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(knightValidMoves);
+        } else if (state.board[row][col]?.type === "bishop") {
+          // Calculate valid knight moves
+          const bishopValidMoves = getValidBishopMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(bishopValidMoves);
+        } else if (state.board[row][col]?.type === "queen") {
+          // Calculate valid knight moves
+          const queenValidMoves = getValidQueenMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(queenValidMoves);
+        } else if (state.board[row][col]?.type === "king") {
+          // Calculate valid knight moves
+          const kingValidMoves = getValidKingMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(kingValidMoves);
+        } else {
+          setValidMoves([]);
+        }
+        if (state.board[row][col] == null) {
+          setValidMoves([]);
+          return { ...state, selected: null };
+        }
+        if (state.board[row][col]?.color === state.turn) {
+          return { ...state, selected: { row, col } };
+        }
+        return state;
+      } else {
+        const isValid = validMoves.some(
+          (move) => move.row === row && move.col === col
+        );
+
+        if (isValid || state.board[row][col]?.type !== "rook") {
+          const newBoard = state.board.map((r) => [...r]);
+          newBoard[row][col] = newBoard[state.selected.row][state.selected.col];
+          newBoard[state.selected.row][state.selected.col] = null;
+          setValidMoves([]); // Clear valid moves after moving
+          return {
+            board: newBoard,
+            selected: null,
+            turn: state.turn === "white" ? "black" : "white",
+          };
+        }
+        setValidMoves([]);
+        return { ...state, selected: null };
+      }
+    });
+  };
   return (
     <div className="flex items-center justify-center border-white border-4">
       <div className="select-none grid grid-cols-8 gap-0 w-[700px] ">
-        {board.map((row, r) =>
+        {boardState.board.map((row, r) =>
           row.map((piece, c) => (
             <Square
               key={`${r}-${c}`}
               row={r}
               col={c}
               piece={piece}
-              onClick={onClick}
-              selected={selected}
+              onClick={handleClick}
+              selected={boardState.selected}
               isValidMove={validMoves.some(
                 (move) => move.row === r && move.col === c
               )}
@@ -241,13 +340,13 @@ export const getValidKingMoves = (
 
   const offsets = [
     { row: -1, col: 0 }, // Up
-    { row: 1, col: 0 },  // Down
+    { row: 1, col: 0 }, // Down
     { row: 0, col: -1 }, // Left
-    { row: 0, col: 1 },  // Right
+    { row: 0, col: 1 }, // Right
     { row: -1, col: -1 }, // Up-left
-    { row: -1, col: 1 },  // Up-right
-    { row: 1, col: -1 },  // Down-left
-    { row: 1, col: 1 },   // Down-right
+    { row: -1, col: 1 }, // Up-right
+    { row: 1, col: -1 }, // Down-left
+    { row: 1, col: 1 }, // Down-right
   ];
 
   for (const offset of offsets) {
@@ -256,12 +355,15 @@ export const getValidKingMoves = (
     // Check if the move is within board bounds
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
       // Allow move if square is empty or has an opponent's piece
-      if (board[newRow][newCol] === null || board[newRow][newCol]?.color !== piece.color) {
+      if (
+        board[newRow][newCol] === null ||
+        board[newRow][newCol]?.color !== piece.color
+      ) {
         moves.push({ row: newRow, col: newCol });
       }
     }
   }
-  
+
   return moves;
 };
 // highlighting the valid queen path
