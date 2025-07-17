@@ -26,7 +26,6 @@ initialBoard[7][2] = { type: "bishop", color: "white", image:pieceImages['white-
 initialBoard[7][3] = { type: "queen", color: "white", image:pieceImages['white-queen'] };
 initialBoard[7][4] = { type: "king", color: "white", image:pieceImages['white-king'] };
 initialBoard[7][5] = { type: "bishop", color: "white", image:pieceImages['white-bishop'] };
-// initialBoard[3][3] = { type: "queen", color: "white", image:pieceImages['white-king'] };
 initialBoard[7][6] = { type: "knight", color: "white", image:pieceImages['white-knight'] };
 initialBoard[7][7] = { type: "rook", color: "white", image:pieceImages['white-rook'] };
 initialBoard[6][0] = { type: "pawn", color: "white", image:pieceImages['white-pawn'] };

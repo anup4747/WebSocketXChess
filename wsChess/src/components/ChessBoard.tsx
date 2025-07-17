@@ -230,6 +230,40 @@ export const getValidKnightMoves = (
   }
   return moves;
 };
+// highlighting the valid king path
+export const getValidKingMoves = (
+  row: number,
+  col: number,
+  piece: Piece,
+  board: (Piece | null)[][]
+): { row: number; col: number }[] => {
+  const moves: { row: number; col: number }[] = [];
+
+  const offsets = [
+    { row: -1, col: 0 }, // Up
+    { row: 1, col: 0 },  // Down
+    { row: 0, col: -1 }, // Left
+    { row: 0, col: 1 },  // Right
+    { row: -1, col: -1 }, // Up-left
+    { row: -1, col: 1 },  // Up-right
+    { row: 1, col: -1 },  // Down-left
+    { row: 1, col: 1 },   // Down-right
+  ];
+
+  for (const offset of offsets) {
+    const newRow = row + offset.row;
+    const newCol = col + offset.col;
+    // Check if the move is within board bounds
+    if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
+      // Allow move if square is empty or has an opponent's piece
+      if (board[newRow][newCol] === null || board[newRow][newCol]?.color !== piece.color) {
+        moves.push({ row: newRow, col: newCol });
+      }
+    }
+  }
+  
+  return moves;
+};
 // highlighting the valid queen path
 export const getValidQueenMoves = (
   row: number,

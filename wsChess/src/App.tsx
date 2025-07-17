@@ -4,7 +4,8 @@ import Chessboard, {
   getValidRookMoves,
   getValidKnightMoves,
   getValidBishopMoves,
-  getValidQueenMoves
+  getValidQueenMoves,
+  getValidKingMoves
 } from "./components/ChessBoard";
 import Controls from "./components/Control";
 import React from "react";
@@ -72,6 +73,15 @@ const App: React.FC = () => {
             state.board
           );
           setValidMoves(queenValidMoves);
+        } else if (state.board[row][col]?.type === "king") {
+          // Calculate valid knight moves
+          const kingValidMoves = getValidKingMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(kingValidMoves);
         }   
         else {
           setValidMoves([]); 
