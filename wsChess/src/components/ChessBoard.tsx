@@ -1,12 +1,10 @@
 import Square from "./Square";
 import type { Piece } from "../types";
-import type { ChessboardProps } from "../types";
 import type { boardStateProp } from "../types";
 import React, { useState } from "react";
 import { initialBoard } from "../utils/initialBoardState";
 
-
-const Chessboard: React.FC<ChessboardProps> = ({ selected }) => {
+const Chessboard: React.FC = () => {
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
@@ -122,7 +120,8 @@ const Chessboard: React.FC<ChessboardProps> = ({ selected }) => {
               isValidMove={validMoves.some(
                 (move) => move.row === r && move.col === c
               )}
-              isSelected={selected?.row === r && selected?.col === c}
+              // isSelected={selected?.row === r && selected?.col === c}
+
             />
           ))
         )}

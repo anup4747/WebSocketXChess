@@ -6,7 +6,6 @@ const Square: React.FC<ExtendedSquareProps> = ({
   piece,
   onClick,
   isValidMove,
-  selected,
   isSelected,
 }) => {
   const isLight = (row + col) % 2 === 0;
