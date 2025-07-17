@@ -32,7 +32,7 @@ const Chessboard: React.FC<ChessboardProps> = ({
   );
 };
 
-// highlighting the path
+// highlighting the valid pawn path
 export const getValidPawnMoves = (
   row: number,
   col: number,
@@ -76,7 +76,7 @@ export const getValidPawnMoves = (
 
   return moves;
 };
-
+// highlighting the valid rook path
 export const getValidRookMoves = (
   row: number,
   col: number,
@@ -135,7 +135,65 @@ export const getValidRookMoves = (
 
   return moves;
 };
+// highlighting the valid knight path
+export const getValidBishopMoves = (
+  row: number,
+  col: number,
+  piece: Piece,
+  board: (Piece | null)[][]
+): { row: number; col: number }[] => {
+  const moves: { row: number; col: number }[] = [];
 
+  // (up-right: row decreases, col increases)
+  for (let i = 1; row - i >= 0 && col + i < 8; i++) {
+    if (board[row - i][col + i] === null) {
+      moves.push({ row: row - i, col: col + i });
+    } else if (board[row - i][col + i]?.color !== piece.color) {
+      moves.push({ row: row - i, col: col + i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (up-left: row decreases, col decreases)
+  for (let i = 1; row - i >= 0 && col - i >= 0; i++) {
+    if (board[row - i][col - i] === null) {
+      moves.push({ row: row - i, col: col - i });
+    } else if (board[row - i][col - i]?.color !== piece.color) {
+      moves.push({ row: row - i, col: col - i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (down-right: row increases, col increases)
+  for (let i = 1; row + i < 8 && col + i < 8; i++) {
+    if (board[row + i][col + i] === null) {
+      moves.push({ row: row + i, col: col + i });
+    } else if (board[row + i][col + i]?.color !== piece.color) {
+      moves.push({ row: row + i, col: col + i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  // (down-left: row increases, col decreases)
+  for (let i = 1; row + i < 8 && col - i >= 0; i++) {
+    if (board[row + i][col - i] === null) {
+      moves.push({ row: row + i, col: col - i });
+    } else if (board[row + i][col - i]?.color !== piece.color) {
+      moves.push({ row: row + i, col: col - i }); // Capture opponent's piece
+      break;
+    } else {
+      break; // Blocked by same-color piece
+    }
+  }
+
+  return moves;
+};
 export const getValidKnightMoves = (
   row: number,
   col: number,

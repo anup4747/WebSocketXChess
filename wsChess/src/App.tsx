@@ -2,7 +2,8 @@ import "./App.css";
 import Chessboard, {
   getValidPawnMoves,
   getValidRookMoves,
-  getValidKnightMoves
+  getValidKnightMoves,
+  getValidBishopMoves
 } from "./components/ChessBoard";
 import Controls from "./components/Control";
 import React from "react";
@@ -45,14 +46,23 @@ const App: React.FC = () => {
           setValidMoves(hookMoves);
         } else if (state.board[row][col]?.type === "knight") {
           // Calculate valid knight moves
-          const hookMoves = getValidKnightMoves(
+          const knightMoves = getValidKnightMoves(
             row,
             col,
             state.board[row][col]!,
             state.board
           );
-          setValidMoves(hookMoves);
-        }  
+          setValidMoves(knightMoves);
+        } else if (state.board[row][col]?.type === "bishop") {
+          // Calculate valid knight moves
+          const bishopMoves = getValidBishopMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(bishopMoves);
+        }   
         else {
           setValidMoves([]); 
         }
