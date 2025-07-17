@@ -1,5 +1,9 @@
 import "./App.css";
-import Chessboard, { getValidPawnMoves } from "./components/ChessBoard";
+import Chessboard, {
+  getValidPawnMoves,
+  getValidRookMoves,
+  getValidKnightMoves
+} from "./components/ChessBoard";
 import Controls from "./components/Control";
 import React from "react";
 import type { boardStateProp } from "./types";
@@ -18,33 +22,54 @@ const App: React.FC = () => {
   });
 
   const handleClick = (row: number, col: number) => {
-    console.log(boardState.board[row][col]?.type , boardState.board[row][col]?.color);
+    // console.log(boardState.board[row][col]?.type , boardState.board[row][col]?.color);
     setBoardState((state) => {
       if (!state.selected) {
-        if (state.board[row][col] == null) {
-          setValidMoves([]);
-          return { ...state, selected: null };
-        }
-       
         if (state.board[row][col]?.type == "pawn") {
           // Calculates the valid pawn moves
-          const moves = getValidPawnMoves(
+          const pawnMoves = getValidPawnMoves(
             row,
             col,
             state.board[row][col]!,
             state.board
           );
-          setValidMoves(moves);
-        } else {
-          setValidMoves([]); // Clear valid moves for non-pawns
+          setValidMoves(pawnMoves);
+        } else if (state.board[row][col]?.type === "rook") {
+          // Calculate valid rook moves
+          const hookMoves = getValidRookMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(hookMoves);
+        } else if (state.board[row][col]?.type === "knight") {
+          // Calculate valid knight moves
+          const hookMoves = getValidKnightMoves(
+            row,
+            col,
+            state.board[row][col]!,
+            state.board
+          );
+          setValidMoves(hookMoves);
+        }  
+        else {
+          setValidMoves([]); 
         }
-         if (state.board[row][col]?.color === state.turn) {
+        if (state.board[row][col] == null) {
+          setValidMoves([]);
+          return { ...state, selected: null };
+        }
+        if (state.board[row][col]?.color === state.turn) {
           return { ...state, selected: { row, col } };
-        } 
+        }
         return state;
       } else {
-        const isValid = validMoves.some((move) => move.row === row && move.col === col);
-        if (isValid || state.board[row][col]?.type !== "pawn") {
+        const isValid = validMoves.some(
+          (move) => move.row === row && move.col === col
+        );
+      
+        if (isValid || state.board[row][col]?.type !== "rook") {
           const newBoard = state.board.map((r) => [...r]);
           newBoard[row][col] = newBoard[state.selected.row][state.selected.col];
           newBoard[state.selected.row][state.selected.col] = null;

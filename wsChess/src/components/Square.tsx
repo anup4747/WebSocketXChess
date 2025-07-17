@@ -11,8 +11,6 @@ const Square: React.FC<ExtendedSquareProps> = ({
 }) => {
   const isLight = (row + col) % 2 === 0;
   const isSelectedPawn = isSelected && piece?.type !== null;
-  // isSelected
-  // console.log(isSelected);
   return (
     <div
       className={`w-22 h-22 flex items-center justify-center ${
