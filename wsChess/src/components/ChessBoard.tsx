@@ -120,7 +120,7 @@ const Chessboard: React.FC = () => {
               isValidMove={validMoves.some(
                 (move) => move.row === r && move.col === c
               )}
-              // isSelected={selected?.row === r && selected?.col === c}
+              isSelected={boardState.selected?.row === r && boardState.selected?.col === c}
 
             />
           ))
@@ -131,7 +131,7 @@ const Chessboard: React.FC = () => {
 };
 
 // highlighting the valid pawn path
-export const getValidPawnMoves = (
+const getValidPawnMoves = (
   row: number,
   col: number,
   piece: Piece,
@@ -175,7 +175,7 @@ export const getValidPawnMoves = (
   return moves;
 };
 // highlighting the valid rook path
-export const getValidRookMoves = (
+const getValidRookMoves = (
   row: number,
   col: number,
   piece: Piece,
@@ -234,7 +234,7 @@ export const getValidRookMoves = (
   return moves;
 };
 // highlighting the valid bishop path
-export const getValidBishopMoves = (
+const getValidBishopMoves = (
   row: number,
   col: number,
   piece: Piece,
@@ -293,7 +293,7 @@ export const getValidBishopMoves = (
   return moves;
 };
 // highlighting the valid knight path
-export const getValidKnightMoves = (
+const getValidKnightMoves = (
   row: number,
   col: number,
   piece: Piece,
@@ -329,7 +329,7 @@ export const getValidKnightMoves = (
   return moves;
 };
 // highlighting the valid king path
-export const getValidKingMoves = (
+const getValidKingMoves = (
   row: number,
   col: number,
   piece: Piece,
@@ -366,7 +366,7 @@ export const getValidKingMoves = (
   return moves;
 };
 // highlighting the valid queen path
-export const getValidQueenMoves = (
+const getValidQueenMoves = (
   row: number,
   col: number,
   piece: Piece,
