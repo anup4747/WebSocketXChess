@@ -3,19 +3,17 @@ import { initialBoard } from "../utils/initialBoardState";
 import type { boardStateProp } from "../types";
 import { Link } from "react-router-dom";
 
-const Controls: React.FC = () => {
+const Controls: React.FC<{ turn: string; resetGame: () => void }> = ({ turn, resetGame }) => {
   const [boardState, setBoardState] = React.useState<boardStateProp>({
     board: initialBoard,
     selected: null,
     turn: "white",
   });
 
-  const resetGame = () => {
-    setBoardState({ board: initialBoard, selected: null, turn: "white" });
-  };
+  
   return (
     <div className="mt-4 flex flex-col items-center">
-      <p className="text-lg text-white">Turn: {boardState.turn}</p>
+      <p className="text-lg text-white">Turn: {turn}</p>
       <button
         className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={resetGame}

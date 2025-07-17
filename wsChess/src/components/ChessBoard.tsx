@@ -3,6 +3,7 @@ import type { Piece } from "../types";
 import type { boardStateProp } from "../types";
 import React, { useState } from "react";
 import { initialBoard } from "../utils/initialBoardState";
+import Controls from "./Control";
 
 const Chessboard: React.FC = () => {
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
@@ -89,7 +90,7 @@ const Chessboard: React.FC = () => {
           (move) => move.row === row && move.col === col
         );
 
-        if (isValid || state.board[row][col]?.type !== "rook") {
+        if (isValid) {
           const newBoard = state.board.map((r) => [...r]);
           newBoard[row][col] = newBoard[state.selected.row][state.selected.col];
           newBoard[state.selected.row][state.selected.col] = null;
@@ -105,28 +106,36 @@ const Chessboard: React.FC = () => {
       }
     });
   };
+  const resetGame = () => {
+    setBoardState({ board: initialBoard, selected: null, turn: "white" });
+  };
   return (
-    <div className="flex items-center justify-center border-white border-4">
-      <div className="select-none grid grid-cols-8 gap-0 w-[700px] ">
-        {boardState.board.map((row, r) =>
-          row.map((piece, c) => (
-            <Square
-              key={`${r}-${c}`}
-              row={r}
-              col={c}
-              piece={piece}
-              onClick={handleClick}
-              selected={boardState.selected}
-              isValidMove={validMoves.some(
-                (move) => move.row === r && move.col === c
-              )}
-              isSelected={boardState.selected?.row === r && boardState.selected?.col === c}
+    <section>
 
-            />
-          ))
-        )}
+      <div className="flex items-center justify-center border-white border-4">
+        <div className="select-none grid grid-cols-8 gap-0 w-[700px] ">
+          {boardState.board.map((row, r) =>
+            row.map((piece, c) => (
+              <Square
+                key={`${r}-${c}`}
+                row={r}
+                col={c}
+                piece={piece}
+                onClick={handleClick}
+                selected={boardState.selected}
+                isValidMove={validMoves.some(
+                  (move) => move.row === r && move.col === c
+                )}
+                isSelected={boardState.selected?.row === r && boardState.selected?.col === c}
+
+              />
+            ))
+          )}
+        </div>
       </div>
-    </div>
+      <Controls resetGame={resetGame} turn={boardState.turn}/>
+    </section>
+
   );
 };
 
