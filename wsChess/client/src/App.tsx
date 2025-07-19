@@ -15,6 +15,18 @@ const App: React.FC = () => {
     }
     return false;
   });
+  const [generatedRoomCode, setGeneratedRoomCode] = React.useState("");
+  const [playerName, setPlayerName] = React.useState("");
+
+  const generateRoomCode = () => {
+    const digits = "0123456789";
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+      code += digits[Math.floor(Math.random() * 10)];
+    }
+    setGeneratedRoomCode(code);
+    return code
+  };
 
   const themeClasses = isDark
     ? "bg-gray-900 text-gray-100"
@@ -47,7 +59,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Menu buttonClasses={buttonClasses} cardClasses={cardClasses} isDark={isDark} toggleTheme={toggleTheme} themeClasses={themeClasses}/>} />
         <Route path="/playoffline" element={<PlayOffline toggleTheme={toggleTheme} buttonClasses={buttonClasses} cardClasses={cardClasses} primaryButtonClasses={primaryButtonClasses} themeClasses={themeClasses} isDark={isDark} />} />
         <Route path="/construction" element={<InConstuction buttonClasses={buttonClasses} themeClasses={themeClasses} />} />
-        <Route path="/roommenu" element={<ChessRoomMenu isDark={isDark} themeClasses={themeClasses} buttonClasses={buttonClasses} cardClasses={cardClasses} primaryButtonClasses={primaryButtonClasses} inputClasses={inputClasses} toggleTheme={toggleTheme} />} />
+        <Route path="/roommenu" element={<ChessRoomMenu isDark={isDark} themeClasses={themeClasses} buttonClasses={buttonClasses} cardClasses={cardClasses} primaryButtonClasses={primaryButtonClasses} inputClasses={inputClasses} toggleTheme={toggleTheme} generateRoomCode={generateRoomCode} generatedRoomCode={generatedRoomCode} setGeneratedRoomCode={setGeneratedRoomCode} playerName={playerName} setPlayerName={setPlayerName} />} />
         <Route path="*" element={<PageNotFound buttonClasses={buttonClasses} themeClasses={themeClasses} />} />
       </Routes>
 

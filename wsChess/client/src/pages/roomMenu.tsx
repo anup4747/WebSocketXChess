@@ -13,24 +13,24 @@ import {
 import { Link } from "react-router-dom";
 import type { RoomMenuProps } from "../types/types";
 
-const ChessRoomMenu: React.FC<RoomMenuProps> = ({isDark,themeClasses,buttonClasses,cardClasses,primaryButtonClasses,inputClasses, toggleTheme}) => {
-
+const ChessRoomMenu: React.FC<RoomMenuProps> = ({
+  isDark,
+  themeClasses,
+  buttonClasses,
+  cardClasses,
+  primaryButtonClasses,
+  inputClasses,
+  generatedRoomCode,
+  generateRoomCode,
+  toggleTheme,
+  setGeneratedRoomCode,
+  setPlayerName,
+  playerName
+}) => {
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [showJoinRoom, setShowJoinRoom] = useState(false);
-  const [playerName, setPlayerName] = useState("");
   const [roomCode, setRoomCode] = useState("");
-  const [generatedRoomCode, setGeneratedRoomCode] = useState("");
   const [copied, setCopied] = useState(false);
-
-  const generateRoomCode = () => {
-    const digits = "0123456789";
-    let code = "";
-    for (let i = 0; i < 6; i++) {
-      code += digits[Math.floor(Math.random() * 10)];
-    }
-    setGeneratedRoomCode(code);
-    return code;
-  };
 
   const copyRoomCode = async () => {
     try {
@@ -45,6 +45,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({isDark,themeClasses,buttonClass
   const handleCreateRoom = () => {
     if (playerName.trim()) {
       const code = generateRoomCode();
+      console.log(" code is ",code)
       setShowCreateRoom(true);
       console.log("Creating room with code:", code, "Player:", playerName);
     }
@@ -92,9 +93,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({isDark,themeClasses,buttonClass
           <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
             <Crown className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-bold font-mono mb-2">
-            Chess Rooms
-          </h1>
+          <h1 className="text-3xl font-bold font-mono mb-2">Chess Rooms</h1>
           <p
             className={`text-sm font-mono ${
               isDark ? "text-gray-400" : "text-gray-600"
@@ -229,7 +228,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({isDark,themeClasses,buttonClass
             <button
               onClick={handleJoinRoom}
               disabled={!roomCode.trim()}
-              className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 ${
+              className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 cursor-pointer ${
                 roomCode.trim()
                   ? primaryButtonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
@@ -241,7 +240,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({isDark,themeClasses,buttonClass
 
             <button
               onClick={resetMenu}
-              className={`w-full px-6 py-3 rounded-xl font-mono transition-colors ${buttonClasses}`}
+              className={`w-full px-6 py-3 rounded-xl font-mono transition-colors cursor-pointer ${buttonClasses}`}
             >
               Back to Menu
             </button>
