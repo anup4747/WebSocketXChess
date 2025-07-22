@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import type { PageNotFoundProps } from "../types/types";
 import { Home } from "lucide-react";
-const PageNotFound: React.FC<PageNotFoundProps> = ({
-  themeClasses,
-  buttonClasses,
-}) => {
+import { useGameThemeContext } from "../context/themeContext";
+const PageNotFound: React.FC = () => {
+
+  const {themeClasses, buttonClasses} = useGameThemeContext();
   return (
     <div
       className={`w-full h-screen flex flex-col justify-center items-center ${themeClasses}`}
@@ -15,7 +14,7 @@ const PageNotFound: React.FC<PageNotFoundProps> = ({
           className={`w-full px-6 py-3 rounded-xl flex items-center justify-center space-x-3 font-mono transition-colors cursor-pointer ${buttonClasses}`}
         >
           <Home className="w-5 h-5" />
-          Home
+          <span>Home</span>
         </button>
       </Link>
     </div>

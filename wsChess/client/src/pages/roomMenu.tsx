@@ -12,17 +12,11 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { RoomMenuProps } from "../types/types";
+import { useGameThemeContext } from "../context/themeContext";
 
 const ChessRoomMenu: React.FC<RoomMenuProps> = ({
-  isDark,
-  themeClasses,
-  buttonClasses,
-  cardClasses,
-  primaryButtonClasses,
-  inputClasses,
   generatedRoomCode,
   generateRoomCode,
-  toggleTheme,
   setGeneratedRoomCode,
   setPlayerName,
   playerName
@@ -31,6 +25,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({
   const [showJoinRoom, setShowJoinRoom] = useState(false);
   const [roomCode, setRoomCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const {isDark, themeClasses, toggleTheme, cardClasses, primaryButtonClasses, buttonClasses, inputClasses} = useGameThemeContext();
 
   const copyRoomCode = async () => {
     try {

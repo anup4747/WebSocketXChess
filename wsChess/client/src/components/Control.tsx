@@ -2,16 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import type { ControlProps } from "../types/types";
 import { LogOut, RotateCcw, Sun, Moon } from "lucide-react";
+import { useGameThemeContext } from "../context/themeContext";
 
 const Controls: React.FC<ControlProps> = ({
   turn,
   resetGame,
-  isDark,
-  cardClasses,
-  toggleTheme,
-  buttonClasses,
-  primaryButtonClasses,
 }) => {
+  const {isDark, buttonClasses, cardClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
+  
   const getTurnColor = () => {
     if (turn === "white") {
       return isDark ? "text-gray-200" : "text-gray-800";

@@ -4,16 +4,11 @@ import type { boardStateProp } from "../types/types";
 import React, { useState } from "react";
 import { initialBoard } from "../utils/initialBoardState";
 import Controls from "./Control";
-import type { ChessboardProps } from "../types/types";
+import { useGameThemeContext } from "../context/themeContext";
 
-const Chessboard: React.FC<ChessboardProps> = ({
-  isDark,
-  themeClasses,
-  cardClasses,
-  buttonClasses,
-  primaryButtonClasses,
-  toggleTheme,
-}) => {
+const Chessboard: React.FC = () => {
+
+  const {isDark, themeClasses, cardClasses, buttonClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );

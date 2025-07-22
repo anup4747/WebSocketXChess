@@ -2,17 +2,12 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { Settings, Computer, User, CloudOff, Sun, Moon } from "lucide-react";
-import type { MenuProps } from "../types/types";
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
+import { useGameThemeContext } from "../context/themeContext";
 
-const Menu: React.FC<MenuProps> = ({
-  buttonClasses,
-  cardClasses,
-  isDark,
-  toggleTheme,
-  themeClasses,
-}) => {
+const Menu: React.FC = () => {
+  const {isDark, buttonClasses, cardClasses, toggleTheme, themeClasses} = useGameThemeContext();
   const sentences = [
     "Make your move, master the board.",
     "Strategy awaits—choose your play.",

@@ -1,25 +1,12 @@
 import Chessboard from "../components/ChessBoard";
 import React from "react";
-import type { PlayOfflineProps } from "../types/types";
+import { useGameThemeContext } from "../context/themeContext";
 
-const PlayOffline: React.FC<PlayOfflineProps> = ({
-  isDark,
-  toggleTheme,
-  themeClasses,
-  cardClasses,
-  buttonClasses,
-  primaryButtonClasses,
-}) => {
-  return (
-    <section className="h-screen flex flex-col justify-center ">
-      <Chessboard
-        toggleTheme={toggleTheme}
-        themeClasses={themeClasses}
-        cardClasses={cardClasses}
-        buttonClasses={buttonClasses}
-        primaryButtonClasses={primaryButtonClasses}
-        isDark={isDark}
-      />
+const PlayOffline: React.FC= () => {
+  const {themeClasses} = useGameThemeContext();
+    return (
+    <section className={`h-screen flex flex-col justify-center ${themeClasses} `}  >
+      <Chessboard/>
     </section>
   );
 };

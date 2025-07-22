@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Home } from "lucide-react";
-import type { InConstuctionProps } from "../types/types";
+import { useGameThemeContext } from "../context/themeContext";
 
-const InConstuction: React.FC<InConstuctionProps> = ({themeClasses, buttonClasses}) => {
+const InConstuction: React.FC= () => {
+  const {themeClasses, buttonClasses} = useGameThemeContext()
+  
   return (
     <div
       className={`w-full h-screen flex flex-col justify-center items-center ${themeClasses}`}

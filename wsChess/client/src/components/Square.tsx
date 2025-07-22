@@ -1,4 +1,5 @@
 import type { ExtendedSquareProps } from "../types/types";
+import { useGameThemeContext } from "../context/themeContext";
 
 const Square: React.FC<ExtendedSquareProps> = ({
   row,
@@ -7,11 +8,10 @@ const Square: React.FC<ExtendedSquareProps> = ({
   onClick,
   isValidMove,
   isSelected,
-  isDark
 }) => {
   const isLight = (row + col) % 2 === 0;
   const isSelectedPiece = isSelected && piece?.type !== null;
-
+  const {isDark} = useGameThemeContext()
 
   const getHighlightClasses = () => {
     let classes = "";
