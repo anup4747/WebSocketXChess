@@ -8,7 +8,7 @@ import { useGameThemeContext } from "../context/themeContext";
 
 const Chessboard: React.FC = () => {
 
-  const {isDark, themeClasses, cardClasses, buttonClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
+  const {isDark} = useGameThemeContext();
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
@@ -20,7 +20,6 @@ const Chessboard: React.FC = () => {
   });
 
   const handleClick = (row: number, col: number) => {
-    // console.log(boardState.board[row][col]?.type , boardState.board[row][col]?.color);
     setBoardState((state) => {
       if (!state.selected) {
         if (state.board[row][col]?.type == "pawn") {
@@ -137,7 +136,6 @@ const Chessboard: React.FC = () => {
                 isValidMove={validMoves.some(
                   (move) => move.row === r && move.col === c
                 )}
-                isDark={isDark}
                 isSelected={
                   boardState.selected?.row === r &&
                   boardState.selected?.col === c
@@ -149,12 +147,6 @@ const Chessboard: React.FC = () => {
       </div>
       <Controls
         resetGame={resetGame}
-        toggleTheme={toggleTheme}
-        themeClasses={themeClasses}
-        cardClasses={cardClasses}
-        buttonClasses={buttonClasses}
-        primaryButtonClasses={primaryButtonClasses}
-        isDark={isDark}
         turn={boardState.turn}
       />
     </section>

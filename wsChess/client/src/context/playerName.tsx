@@ -15,7 +15,7 @@ export const usePlayerNameContext = () => {
   return context;
 };
 
-export const PlayerNameContextProvider: React.FC<{ children: React.ReactNode }> = ({
+export const PlayerNameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [playerName, setPlayerName] = useState("");

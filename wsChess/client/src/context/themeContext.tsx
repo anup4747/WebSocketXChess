@@ -10,10 +10,10 @@ interface gameThemeType {
   inputClasses?: string;
 }
 
-const gameThemeContext = createContext<gameThemeType | undefined>(undefined);
+const GameThemeContext = createContext<gameThemeType | undefined>(undefined);
 
 export const useGameThemeContext = () => {
-  const context = useContext(gameThemeContext);
+  const context = useContext(GameThemeContext);
   if (!context) {
     throw new Error("useGameThemeContext must be used within a GameThemeProvider");
   }
@@ -44,7 +44,7 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     ? 'bg-blue-600 hover:bg-blue-700 text-white'
     : 'bg-blue-600 hover:bg-blue-700 text-white';
   return (
-    <gameThemeContext.Provider
+    <GameThemeContext.Provider
       value={{
         isDark,
         toggleTheme,
@@ -56,6 +56,6 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     }}
     >
       {children}
-    </gameThemeContext.Provider>
+    </GameThemeContext.Provider>
   );
 };

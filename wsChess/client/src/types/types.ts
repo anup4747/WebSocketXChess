@@ -14,33 +14,9 @@ export interface boardStateProp {
   turn: "white" | "black";
 }
 
-export interface ChessboardProps {
-  isDark?:boolean;
-  themeClasses?:string;
-  cardClasses?:string;
-  buttonClasses?:string;
-  primaryButtonClasses?:string;
-  toggleTheme?: () => void;
-}
-
-export interface PlayOfflineProps{
-  isDark?:boolean;
-  themeClasses?:string;
-  cardClasses?:string;
-  buttonClasses?:string;
-  primaryButtonClasses?:string;
-  toggleTheme?: () => void;
-}
-
 export interface ControlProps{
-  isDark?:boolean;
-  themeClasses?:string;
-  cardClasses?:string;
-  buttonClasses?:string;
-  primaryButtonClasses?:string;
-  turn?: string;
-  toggleTheme?: () => void;
-  resetGame?: () => void;
+  turn: string;
+  resetGame: () => void;
 }
 
 export interface SquareProps {
@@ -54,28 +30,5 @@ export interface ExtendedSquareProps extends SquareProps {
   selected: { row: number; col: number } | null;
   isValidMove?: boolean; // valid move highlighting
   isSelected?: boolean;  // check if it is seclected
-  isDark?:boolean;
 }
 
-export interface MenuProps{
-  isDark?:boolean;
-  themeClasses?:string;
-  buttonClasses?:string;
-  cardClasses?:string;
-  toggleTheme?: () => void;
-}
-
-export interface RoomMenuProps{
-  playerName?:string;
-  setPlayerName: (name: string) => void;
-}
-
-export interface InConstuctionProps{
-  themeClasses?:string;
-  buttonClasses?:string;
-}
-
-export interface PageNotFoundProps{
-  themeClasses?:string;
-  buttonClasses?:string;
-}

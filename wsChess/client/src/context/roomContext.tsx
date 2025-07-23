@@ -16,7 +16,7 @@ export const useRoomContext = () => {
   return context;
 };
 
-export const RoomContextProvider: React.FC<{ children: React.ReactNode }> = ({
+export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
   const [generatedRoomCode, setGeneratedRoomCode] = useState<string>("");

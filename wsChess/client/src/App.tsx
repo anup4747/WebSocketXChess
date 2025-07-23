@@ -7,8 +7,8 @@ import InConstuction from "./pages/inConstruction";
 import PageNotFound from "./pages/pageNotFound";
 import ChessRoomMenu from "./pages/roomMenu";
 import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
-import { RoomContextProvider } from "./context/roomContext";
-import { PlayerNameContextProvider } from "./context/playerName";
+import { RoomProvider } from "./context/roomContext";
+import { PlayerNameProvider } from "./context/playerName";
 
 const AppContent: React.FC = () => {
 
@@ -16,7 +16,6 @@ const AppContent: React.FC = () => {
 
   return (
     <section className={`flex flex-col items-center justify-center ${themeClasses}`} >
-      {/* // bg-[#1c1c1c] */}
       <Routes>
         <Route path="/" element={<Menu/> } />
         <Route path="/playoffline" element={<PlayOffline />} />
@@ -31,13 +30,13 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return(
-    <PlayerNameContextProvider>
+    <PlayerNameProvider>
       <GameThemeProvider>
-        <RoomContextProvider>
+        <RoomProvider>
           <AppContent/>
-        </RoomContextProvider>
+        </RoomProvider>
       </GameThemeProvider>
-    </PlayerNameContextProvider>
+    </PlayerNameProvider>
   )
 }
 
