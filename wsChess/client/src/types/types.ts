@@ -66,16 +66,6 @@ export interface MenuProps{
 }
 
 export interface RoomMenuProps{
-  isDark?:boolean;
-  themeClasses?:string;
-  buttonClasses?:string;
-  cardClasses?:string;
-  primaryButtonClasses?:string;
-  inputClasses?:string;
-  generatedRoomCode?:string;
-  toggleTheme?: () => void;
-  generateRoomCode?: () => string;
-  setGeneratedRoomCode: (code: string) => void;
   playerName?:string;
   setPlayerName: (name: string) => void;
 }

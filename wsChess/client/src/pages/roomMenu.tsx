@@ -13,11 +13,9 @@ import {
 import { Link } from "react-router-dom";
 import type { RoomMenuProps } from "../types/types";
 import { useGameThemeContext } from "../context/themeContext";
+import { useRoomContext } from "../context/roomContext";
 
 const ChessRoomMenu: React.FC<RoomMenuProps> = ({
-  generatedRoomCode,
-  generateRoomCode,
-  setGeneratedRoomCode,
   setPlayerName,
   playerName
 }) => {
@@ -26,6 +24,7 @@ const ChessRoomMenu: React.FC<RoomMenuProps> = ({
   const [roomCode, setRoomCode] = useState("");
   const [copied, setCopied] = useState(false);
   const {isDark, themeClasses, toggleTheme, cardClasses, primaryButtonClasses, buttonClasses, inputClasses} = useGameThemeContext();
+  const {generatedRoomCode, setGeneratedRoomCode, generateRoomCode} = useRoomContext();
 
   const copyRoomCode = async () => {
     try {

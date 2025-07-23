@@ -1,61 +1,45 @@
 import React, { createContext, useContext, useState } from "react";
 
-interface gameThemeType {
-  isDark: boolean;
-  toggleTheme: () => void;
-  themeClasses?: string;
-  buttonClasses?: string;
-  cardClasses?: string;
-  primaryButtonClasses?: string;
-  inputClasses?: string;
+interface RoomContextType {
+  generateRoomCode: () => string;
+  generatedRoomCode: string;
+  setGeneratedRoomCode: (code: string) => void;
 }
 
-const gameThemeContext = createContext<gameThemeType | undefined>(undefined);
+const RoomContext = createContext<RoomContextType | undefined>(undefined);
 
-export const useGameThemeContext = () => {
-  const context = useContext(gameThemeContext);
+export const useRoomContext = () => {
+  const context = useContext(RoomContext);
   if (!context) {
-    throw new Error("usegamecontext must be used within a gamethemeProvider");
+    throw new Error("useRoomContext must be used within a RoomContextProvider");
   }
   return context;
 };
 
-export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
+export const RoomContextProvider: React.FC<{ children: React.ReactNode }> = ({
+  children
 }) => {
-
-    const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [generatedRoomCode, setGeneratedRoomCode] = useState<string>("");
+  
+  const generateRoomCode = () => {
+    const digits = "0123456789";
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+      code += digits[Math.floor(Math.random() * 10)];
     }
-    return false;
-  });
+    setGeneratedRoomCode(code);
+    return code
+  };
 
-  const toggleTheme = () => setIsDark((prev) => !prev);
-  const themeClasses = isDark ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900';
-  const cardClasses = isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200';
-  const inputClasses = isDark
-    ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400'
-    : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500';
-  const buttonClasses = isDark
-    ? 'bg-gray-700 hover:bg-gray-600 border-gray-600 text-gray-300'
-    : 'bg-gray-100 hover:bg-gray-200 border-gray-300 text-gray-700';
-  const primaryButtonClasses = isDark
-    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-    : 'bg-blue-600 hover:bg-blue-700 text-white';
-  return (
-    <gameThemeContext.Provider
-      value={{
-        isDark,
-        toggleTheme,
-        themeClasses,
-        cardClasses,
-        inputClasses,
-        buttonClasses,
-        primaryButtonClasses
+  return(
+    <RoomContext.Provider
+    value={{
+      generateRoomCode,
+      generatedRoomCode,
+      setGeneratedRoomCode          
     }}
     >
       {children}
-    </gameThemeContext.Provider>
-  );
+    </RoomContext.Provider>
+    );
 };

@@ -7,23 +7,15 @@ import InConstuction from "./pages/inConstruction";
 import PageNotFound from "./pages/pageNotFound";
 import ChessRoomMenu from "./pages/roomMenu";
 import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
+import { RoomContextProvider, useRoomContext } from "./context/roomContext";
 
 const AppContent: React.FC = () => {
 
-  const {isDark, themeClasses, buttonClasses, inputClasses, cardClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
+  const {themeClasses} = useGameThemeContext();
 
-  const [generatedRoomCode, setGeneratedRoomCode] = React.useState("");
+  const {generatedRoomCode, setGeneratedRoomCode} = useRoomContext();
   const [playerName, setPlayerName] = React.useState("");
 
-  const generateRoomCode = () => {
-    const digits = "0123456789";
-    let code = "";
-    for (let i = 0; i < 6; i++) {
-      code += digits[Math.floor(Math.random() * 10)];
-    }
-    setGeneratedRoomCode(code);
-    return code
-  };
 
   return (
     <section className={`flex flex-col items-center justify-center ${themeClasses}`} >
@@ -32,7 +24,7 @@ const AppContent: React.FC = () => {
         <Route path="/" element={<Menu/> } />
         <Route path="/playoffline" element={<PlayOffline />} />
         <Route path="/construction" element={<InConstuction />} />
-        <Route path="/roommenu" element={<ChessRoomMenu generateRoomCode={generateRoomCode} generatedRoomCode={generatedRoomCode} setGeneratedRoomCode={setGeneratedRoomCode} playerName={playerName} setPlayerName={setPlayerName} />} />
+        <Route path="/roommenu" element={<ChessRoomMenu playerName={playerName} setPlayerName={setPlayerName} />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 
@@ -43,7 +35,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return(
     <GameThemeProvider>
-      <AppContent/>
+      <RoomContextProvider>
+        <AppContent/>
+      </RoomContextProvider>
     </GameThemeProvider>
   )
 }
