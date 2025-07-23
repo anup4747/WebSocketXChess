@@ -24,6 +24,15 @@ const ChessRoomMenu: React.FC = () => {
   const {generatedRoomCode, setGeneratedRoomCode, generateRoomCode} = useRoomContext();
   const {playerName, setPlayerName} = usePlayerNameContext();
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Capitalize first letter, keep rest as typed
+    const capitalizedValue = value
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : '';
+    setPlayerName(capitalizedValue);
+  };
+
   const copyRoomCode = async () => {
     try {
       await navigator.clipboard.writeText(generatedRoomCode);
@@ -158,7 +167,7 @@ const ChessRoomMenu: React.FC = () => {
               <input
                 type="text"
                 value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
+                onChange={handleNameChange}
                 placeholder="Enter your name..."
                 className={`w-full px-4 py-3 rounded-xl border font-mono transition-colors ${inputClasses}`}
                 maxLength={20}
