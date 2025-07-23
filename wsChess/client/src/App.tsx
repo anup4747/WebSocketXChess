@@ -7,15 +7,12 @@ import InConstuction from "./pages/inConstruction";
 import PageNotFound from "./pages/pageNotFound";
 import ChessRoomMenu from "./pages/roomMenu";
 import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
-import { RoomContextProvider, useRoomContext } from "./context/roomContext";
+import { RoomContextProvider } from "./context/roomContext";
+import { PlayerNameContextProvider } from "./context/playerName";
 
 const AppContent: React.FC = () => {
 
   const {themeClasses} = useGameThemeContext();
-
-  const {generatedRoomCode, setGeneratedRoomCode} = useRoomContext();
-  const [playerName, setPlayerName] = React.useState("");
-
 
   return (
     <section className={`flex flex-col items-center justify-center ${themeClasses}`} >
@@ -24,7 +21,7 @@ const AppContent: React.FC = () => {
         <Route path="/" element={<Menu/> } />
         <Route path="/playoffline" element={<PlayOffline />} />
         <Route path="/construction" element={<InConstuction />} />
-        <Route path="/roommenu" element={<ChessRoomMenu playerName={playerName} setPlayerName={setPlayerName} />} />
+        <Route path="/roommenu" element={<ChessRoomMenu />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 
@@ -34,11 +31,13 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return(
-    <GameThemeProvider>
-      <RoomContextProvider>
-        <AppContent/>
-      </RoomContextProvider>
-    </GameThemeProvider>
+    <PlayerNameContextProvider>
+      <GameThemeProvider>
+        <RoomContextProvider>
+          <AppContent/>
+        </RoomContextProvider>
+      </GameThemeProvider>
+    </PlayerNameContextProvider>
   )
 }
 
