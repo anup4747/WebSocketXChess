@@ -70,33 +70,33 @@ const ChessRoomMenu: React.FC = () => {
 
   return (
     <div
-      className={`h-screen w-full flex items-center justify-center p-8 transition-colors duration-300 ${themeClasses}`}
+      className={`min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8 transition-colors duration-300 ${themeClasses}`}
     >
       <div
-        className={`w-full max-w-md rounded-3xl p-8 shadow-2xl border transition-all ${cardClasses}`}
+        className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border transition-all ${cardClasses}`}
       >
         {/* Theme Toggle */}
-        <div className="flex justify-end mb-6">
+        <div className="flex justify-end mb-4 sm:mb-6">
           <button
             onClick={toggleTheme}
             className={`p-2 rounded-lg border transition-colors ${buttonClasses}`}
             aria-label="Toggle theme"
           >
             {isDark ? (
-              <Sun className="w-4 h-4" />
+              <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <Moon className="w-4 h-4" />
+              <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
         </div>
 
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
-            <Crown className="w-8 h-8" />
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-3 sm:mb-4">
+            <Crown className="w-8 h-8 sm:w-8 sm:h-8" />
           </div>
           <h1 className="text-3xl font-bold font-mono mb-2">Chess Rooms</h1>
           <p
-            className={`text-sm font-mono ${
+            className={`text-xs sm:text-sm font-mono ${
               isDark ? "text-gray-400" : "text-gray-600"
             }`}
           >
@@ -105,27 +105,27 @@ const ChessRoomMenu: React.FC = () => {
         </div>
 
         {showCreateRoom && generatedRoomCode && (
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <div
-              className={`rounded-xl p-6 border ${
+              className={`rounded-xl p-4 sm:p-6 border ${
                 isDark
                   ? "bg-green-900/30 border-green-700"
                   : "bg-green-50 border-green-200"
               }`}
             >
               <div className="text-center">
-                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Check className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3  sm:mb-4">
+                  <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold font-mono text-green-500 mb-2">
+                <h3 className="text-base sm:text-lg font-bold font-mono text-green-500 mb-2">
                   Room Created!
                 </h3>
-                <p className="text-sm font-mono mb-4">
+                <p className="text-sm font-mono mb-3 sm:mb-4">
                   Share this code with your friend:
                 </p>
                 <div className="flex items-center justify-center space-x-2">
                   <div
-                    className={`px-4 py-2 rounded-lg font-mono text-lg font-bold ${
+                    className={`px-3 sm:px-4 py-2 rounded-lg font-mono text-base sm:text-lg font-bold ${
                       isDark ? "bg-gray-700" : "bg-gray-100"
                     }`}
                   >
@@ -143,14 +143,14 @@ const ChessRoomMenu: React.FC = () => {
                     )}
                   </button>
                 </div>
-                <p className="text-xs font-mono mt-4 opacity-70">
+                <p className="text-xs font-mono mt-3 sm:mt-4 opacity-70">
                   Waiting for opponent to join...
                 </p>
               </div>
             </div>
             <button
               onClick={resetMenu}
-              className={`w-full mt-4 px-6 py-3 rounded-xl font-mono transition-colors ${buttonClasses}`}
+              className={`w-full mt-3 sm:mt-4 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-mono transition-colors text-sm sm:text-base ${buttonClasses}`}
             >
               Back to Menu
             </button>
@@ -158,10 +158,10 @@ const ChessRoomMenu: React.FC = () => {
         )}
 
         {!showCreateRoom && !showJoinRoom && (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {/* Player Name Input */}
-            <div className="mb-6">
-              <label className="block text-sm font-mono font-bold mb-2">
+            <div className="mb-4 sm:mb-6">
+              <label className="block text-xs sm:text-sm font-mono font-bold mb-2">
                 Your Name
               </label>
               <input
@@ -169,7 +169,7 @@ const ChessRoomMenu: React.FC = () => {
                 value={playerName}
                 onChange={handleNameChange}
                 placeholder="Enter your name..."
-                className={`w-full px-4 py-3 rounded-xl border font-mono transition-colors ${inputClasses}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border font-mono transition-colors text-sm sm:text-base ${inputClasses}`}
                 maxLength={20}
               />
             </div>
@@ -177,33 +177,33 @@ const ChessRoomMenu: React.FC = () => {
             <button
               onClick={handleCreateRoom}
               disabled={!playerName.trim()}
-              className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 ${
+              className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base ${
                 playerName.trim()
                   ? primaryButtonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Create Room</span>
             </button>
 
             <button
               onClick={() => setShowJoinRoom(true)}
               disabled={!playerName.trim()}
-              className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 ${
+              className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base  ${
                 playerName.trim()
                   ? buttonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}
             >
-              <LogIn className="w-5 h-5" />
+              <LogIn className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"/>
               <span>Join Room</span>
             </button>
             <Link to="/">
               <button
-                className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 cursor-pointer ${buttonClasses}`}
+                className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 cursor-pointer text-sm sm:text-base ${buttonClasses}`}
               >
-                <Home className="w-5 h-5" />
+                <Home className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                 <span>Home</span>
               </button>
             </Link>
@@ -211,9 +211,9 @@ const ChessRoomMenu: React.FC = () => {
         )}
 
         {showJoinRoom && (
-          <div className="space-y-4">
-            <div className="mb-6">
-              <label className="block text-sm font-mono font-bold mb-2">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="mb-4 sm:mb-6">
+              <label className="block text-xs sm:text-sm font-mono font-bold mb-2">
                 Room Code
               </label>
               <input
@@ -221,7 +221,7 @@ const ChessRoomMenu: React.FC = () => {
                 value={roomCode}
                 onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
                 placeholder="Enter room code..."
-                className={`w-full px-4 py-3 rounded-xl border font-mono transition-colors ${inputClasses}`}
+                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border font-mono transition-colors text-sm sm:text-base ${inputClasses}`}
                 maxLength={6}
               />
             </div>
@@ -229,19 +229,19 @@ const ChessRoomMenu: React.FC = () => {
             <button
               onClick={handleJoinRoom}
               disabled={!roomCode.trim()}
-              className={`w-full px-6 py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-3 cursor-pointer ${
+              className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 cursor-pointer text-sm sm:text-base ${
                 roomCode.trim()
                   ? primaryButtonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}
             >
-              <Users className="w-5 h-5" />
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Join Game</span>
             </button>
 
             <button
               onClick={resetMenu}
-              className={`w-full px-6 py-3 rounded-xl font-mono transition-colors cursor-pointer ${buttonClasses}`}
+              className={`w-full px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
               Back to Menu
             </button>
@@ -249,7 +249,7 @@ const ChessRoomMenu: React.FC = () => {
         )}
 
         <div
-          className={`text-center text-xs font-mono mt-8 ${
+          className={`text-center text-xs font-mono  mt-6 sm:mt-8 ${
             isDark ? "text-gray-500" : "text-gray-400"
           }`}
         >

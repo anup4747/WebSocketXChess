@@ -45,33 +45,33 @@ const Menu: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen w-full ${themeClasses}`}
+      className={`flex flex-col items-center justify-center min-h-screen w-full px-4 sm:px-6 lg:px-8  ${themeClasses}`}
     >
       <div
-        className={`w-full max-w-md rounded-3xl p-14 shadow-2xl border transition-all ${cardClasses}`}
+        className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl border transition-all ${cardClasses}`}
       >
-        <div className="flex justify-end mb-6">
+        <div className="flex justify-end mb-4 sm:mb-6">
           <button
             onClick={toggleTheme}
             className={`p-2 rounded-lg border transition-colors ${buttonClasses}`}
             aria-label="Toggle theme"
           >
             {isDark ? (
-              <Sun className="w-4 h-4" />
+              <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <Moon className="w-4 h-4" />
+              <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
         </div>
 
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold font-mono mb-2">
+        <div className="text-center mb-8 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono mb-2">
             Wanna Play Chess?
           </h1>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden px-2 sm:px-0">
             <p
               ref={paragraphRef}
-              className={`text-sm font-mono ${
+              className={`text-sm sm:text-sm font-mono ${
                 isDark ? "text-gray-400" : "text-gray-600"
               }`}
             >
@@ -80,36 +80,36 @@ const Menu: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
           <Link to="/construction">
             <button
-              className={`w-full px-6 py-3 rounded-xl flex items-center justify-center space-x-3 font-mono transition-colors cursor-pointer ${buttonClasses}`}
+              className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
-              <Computer className="w-5 h-5" />
+              <Computer className="w-5 h-5 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Play with Computer</span>
             </button>
           </Link>
           <Link to="/roommenu">
             <button
-              className={`w-full px-6 py-3 rounded-xl flex items-center justify-center space-x-3 font-mono transition-colors cursor-pointer ${buttonClasses}`}
+              className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
-              <User className="w-5 h-5" />
+              <User className="w-5 h-5 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Play Multiplayer</span>
             </button>
           </Link>
           <Link to="/playoffline">
             <button
-              className={`w-full px-6 py-3 rounded-xl flex items-center justify-center space-x-3 font-mono transition-colors cursor-pointer ${buttonClasses}`}
+              className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
-              <CloudOff className="w-5 h-5" />
+              <CloudOff className="w-5 h-5 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Play Offline</span>
             </button>
           </Link>
           <Link to="/construction">
             <button
-              className={`w-full px-6 py-3 rounded-xl flex items-center justify-center space-x-3 font-mono transition-colors cursor-pointer ${buttonClasses}`}
+              className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
-              <Settings className="w-5 h-5" />
+              <Settings className="w-5 h-5 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Setting</span>
             </button>
           </Link>
