@@ -180,7 +180,6 @@ const getValidPawnMoves = (
 
   // diagonal moves
   if (
-    row !== startRow &&
     board[row + direction]?.[col - 1]?.color !== piece.color &&
     board[row + direction]?.[col - 1] !== null
   ) {
@@ -188,7 +187,6 @@ const getValidPawnMoves = (
   }
 
   if (
-    row !== startRow &&
     board[row + direction]?.[col + 1]?.color !== piece.color &&
     board[row + direction]?.[col + 1] !== null
   ) {
