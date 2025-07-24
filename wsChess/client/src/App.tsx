@@ -9,6 +9,7 @@ import ChessRoomMenu from "./pages/roomMenu";
 import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
 import { RoomProvider } from "./context/roomContext";
 import { PlayerNameProvider } from "./context/playerName";
+import { BoardStateProvider } from "./context/boardContext";
 
 const AppContent: React.FC = () => {
 
@@ -31,9 +32,11 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return(
     <PlayerNameProvider>
-      <GameThemeProvider>
-        <RoomProvider>
-          <AppContent/>
+        <GameThemeProvider>
+          <RoomProvider>
+            <BoardStateProvider>
+            <AppContent/>
+           </BoardStateProvider>
         </RoomProvider>
       </GameThemeProvider>
     </PlayerNameProvider>

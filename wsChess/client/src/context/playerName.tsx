@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
-interface PlayerNameContextType {
-  playerName: string;
-  setPlayerName: (name: string) => void;
-}
+import type { PlayerNameContextType } from "../types/types";
 
 const PlayerNameContext = createContext<PlayerNameContextType | undefined>(undefined);
 

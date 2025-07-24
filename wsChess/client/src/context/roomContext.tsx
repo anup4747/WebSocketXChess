@@ -1,10 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
-interface RoomContextType {
-  generateRoomCode: () => string;
-  generatedRoomCode: string;
-  setGeneratedRoomCode: (code: string) => void;
-}
+import type { RoomContextType } from "../types/types";
 
 const RoomContext = createContext<RoomContextType | undefined>(undefined);
 

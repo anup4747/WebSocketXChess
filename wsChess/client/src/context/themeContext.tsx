@@ -1,14 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
-interface gameThemeType {
-  isDark: boolean;
-  toggleTheme: () => void;
-  themeClasses?: string;
-  buttonClasses?: string;
-  cardClasses?: string;
-  primaryButtonClasses?: string;
-  inputClasses?: string;
-}
+import type { gameThemeType } from "../types/types";
 
 const GameThemeContext = createContext<gameThemeType | undefined>(undefined);
 

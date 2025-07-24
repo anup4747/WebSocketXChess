@@ -8,10 +8,31 @@ export interface Piece {
   image?: string; 
 }
 
-export interface boardStateProp {
+export interface BoardStateContextType {
   board: (Piece | null)[][];
   selected: { row: number; col: number } | null;
   turn: "white" | "black";
+}
+
+export interface PlayerNameContextType {
+  playerName: string;
+  setPlayerName: (name: string) => void;
+}
+
+export interface RoomContextType {
+  generateRoomCode: () => string;
+  generatedRoomCode: string;
+  setGeneratedRoomCode: (code: string) => void;
+}
+
+export interface GameThemeContextType {
+  isDark: boolean;
+  toggleTheme: () => void;
+  themeClasses?: string;
+  buttonClasses?: string;
+  cardClasses?: string;
+  primaryButtonClasses?: string;
+  inputClasses?: string;
 }
 
 export interface ControlProps{

@@ -19,7 +19,7 @@ const Controls: React.FC<ControlProps> = ({
   };
 
   return (
-    <div
+    <section
       className={`mt-6 p-6 rounded-2xl border transition-all duration-300 ${cardClasses}`}
     >
       <div className="flex items-center justify-between mb-4 gap-4">
@@ -63,7 +63,7 @@ const Controls: React.FC<ControlProps> = ({
           </button>
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 

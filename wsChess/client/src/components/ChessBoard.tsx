@@ -1,10 +1,9 @@
 import Square from "./Square";
 import type { Piece } from "../types/types";
-import type { boardStateProp } from "../types/types";
 import React, { useState } from "react";
-import { initialBoard } from "../utils/initialBoardState";
 import Controls from "./Control";
 import { useGameThemeContext } from "../context/themeContext";
+import { useBoardStateContext } from "../context/boardContext";
 
 const Chessboard: React.FC = () => {
 
@@ -12,12 +11,7 @@ const Chessboard: React.FC = () => {
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
-
-  const [boardState, setBoardState] = React.useState<boardStateProp>({
-    board: initialBoard,
-    selected: null,
-    turn: "white",
-  });
+  const {boardState, setBoardState, resetGame} = useBoardStateContext();
 
   const handleClick = (row: number, col: number) => {
     setBoardState((state) => {
@@ -109,9 +103,6 @@ const Chessboard: React.FC = () => {
       }
     });
   };
-  const resetGame = () => {
-    setBoardState({ board: initialBoard, selected: null, turn: "white" });
-  };
 
   const getBorder = () => {
     if (isDark) {
@@ -124,8 +115,8 @@ const Chessboard: React.FC = () => {
     <section>
       <div className={`flex items-center justify-center ${getBorder()}`}>
         <div className="select-none grid grid-cols-8 gap-0 w-[700px] ">
-          {boardState.board.map((row, r) =>
-            row.map((piece, c) => (
+          {boardState.board.map((row:number, r:number) =>
+            row.map((piece, c:number) => (
               <Square
                 key={`${r}-${c}`}
                 row={r}
