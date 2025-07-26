@@ -42,7 +42,7 @@ const ChessRoomMenu: React.FC = () => {
       gsap.fromTo(
         roomMenu.current,
         { opacity: 0, y: -40, scale:0.7 },
-        { opacity: 1, y: 0,scale:1, duration: 3, delay: 3, ease:"back" }
+        { opacity: 1, y: 0,scale:1, duration: 2.5, delay: 3, ease:"back" }
       );
     });
 

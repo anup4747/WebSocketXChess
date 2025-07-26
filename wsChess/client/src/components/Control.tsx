@@ -20,7 +20,7 @@ const Controls: React.FC<ControlProps> = ({
 
   return (
     <section
-      className={`mt-6 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 rounded-2xl border transition-all duration-300 ${cardClasses}`}
+      className={`mt-6 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[610px] md:max-w-[710px] rounded-2xl border transition-all duration-300 ${cardClasses}`}
     >
       <div className="flex items-center justify-between mb-4 gap-4">
         <div className="flex items-center space-x-3">

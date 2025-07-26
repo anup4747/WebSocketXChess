@@ -16,18 +16,12 @@ const Chessboard: React.FC = () => {
   );
   const { boardState, setBoardState, resetGame } = useBoardStateContext();
   const board = useRef<HTMLDivElement | null>(null);
-  const control = useRef<HTMLDivElement | null>(null);
 
   useGSAP(() => {
     gsap.fromTo(
       board.current,
       { opacity: 0, y: -40 },
       { opacity: 1, y: 0, duration: 1.7, delay: 3.5, ease: "sine" }
-    );
-    gsap.fromTo(
-      control.current,
-      { opacity: 0, y: -30 },
-      { opacity: 1, y: 0, duration: 1.7, delay: 4.5, ease: "sine.in" }
     );
   });
 
@@ -131,34 +125,33 @@ const Chessboard: React.FC = () => {
   };
   return (
     <section className="px-4 md:px-8 sm:px-12">
-      <div
-        ref={board}
-        className={`flex items-center justify-center ${getBorder()}`}
-      >
-        <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[700px]">
-          {boardState.board.map((row: number, r: number) =>
-            row.map((piece, c: number) => (
-              <Square
-                key={`${r}-${c}`}
-                row={r}
-                col={c}
-                piece={piece}
-                onClick={handleClick}
-                selected={boardState.selected}
-                isValidMove={validMoves.some(
-                  (move) => move.row === r && move.col === c
-                )}
-                isSelected={
-                  boardState.selected?.row === r &&
-                  boardState.selected?.col === c
-                }
-              />
-            ))
-          )}
+      <div className="flex items-center justify-center">
+        <div
+          ref={board}
+          className={`flex items-center justify-center ${getBorder()}`}
+        >
+          <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[700px]">
+            {boardState.board.map((row: number, r: number) =>
+              row.map((piece, c: number) => (
+                <Square
+                  key={`${r}-${c}`}
+                  row={r}
+                  col={c}
+                  piece={piece}
+                  onClick={handleClick}
+                  selected={boardState.selected}
+                  isValidMove={validMoves.some(
+                    (move) => move.row === r && move.col === c
+                  )}
+                  isSelected={
+                    boardState.selected?.row === r &&
+                    boardState.selected?.col === c
+                  }
+                />
+              ))
+            )}
+          </div>
         </div>
-      </div>
-      <div ref={control}>
-        <Controls resetGame={resetGame} turn={boardState.turn} />
       </div>
     </section>
   );

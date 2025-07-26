@@ -2,7 +2,7 @@ import "./App.css";
 import Menu from "./pages/menu";
 import React,{ useState, useEffect} from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import PlayOffline from "./pages/offline";
+import PlayChess from "./pages/chessPage";
 import InConstuction from "./pages/inConstruction";
 import PageNotFound from "./pages/pageNotFound";
 import ChessRoomMenu from "./pages/roomMenu";
@@ -75,7 +75,7 @@ const AppContent: React.FC = () => {
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Menu />} />
-            <Route path="/playoffline" element={<PlayOffline />} />
+            <Route path="/playoffline" element={<PlayChess />} />
             <Route path="/construction" element={<InConstuction />} />
             <Route path="/roommenu" element={<ChessRoomMenu />} />
             <Route path="*" element={<PageNotFound />} />

@@ -1,4 +1,3 @@
-// Menu Component
 import { Link } from "react-router-dom";
 import React from "react";
 import { Settings, Computer, User, CloudOff, Sun, Moon } from "lucide-react";
