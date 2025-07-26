@@ -22,14 +22,13 @@ const AppContent: React.FC = () => {
 
   function connectSocket(){
     socket.on("connection", () =>{
-      console.log(socket.id)
+      console.log("connected from client ")
     })
   }
 
   useEffect(()=>{
     connectSocket();
   },[])
-
 
   useEffect(() => {
     setIsLoading(true);

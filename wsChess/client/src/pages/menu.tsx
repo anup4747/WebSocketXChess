@@ -5,6 +5,9 @@ import { Settings, Computer, User, CloudOff, Sun, Moon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { useGameThemeContext } from "../context/themeContext";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const Menu: React.FC = () => {
   const {isDark, buttonClasses, cardClasses, toggleTheme, themeClasses} = useGameThemeContext();
@@ -31,7 +34,17 @@ const Menu: React.FC = () => {
     "Check your fear. Then check your opponent."
   ];
   const [currentSentence, setCurrentSentence] = useState(sentences[0]);
-  const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const paragraphRef = useRef<HTMLParagraphElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null> (null)
+
+  useGSAP(() => {
+      gsap.fromTo(
+        menuRef.current,
+        { opacity: 0, y: -40, scale:0.7 },
+        { opacity: 1, y: 0,scale:1, duration: 3, delay: 3, ease:"back" }
+      );
+    });
+
   useEffect(() => {
     const animateText = () => {
       gsap.fromTo(
@@ -58,6 +71,7 @@ const Menu: React.FC = () => {
       className={`flex flex-col items-center justify-center min-h-screen w-full px-4 sm:px-6 lg:px-8  ${themeClasses}`}
     >
       <div
+        ref={menuRef}
         className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl border transition-all ${cardClasses}`}
       >
         <div className="flex justify-end mb-4 sm:mb-6">

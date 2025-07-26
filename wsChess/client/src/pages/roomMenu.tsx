@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Crown,
   Users,
@@ -14,22 +14,44 @@ import { Link } from "react-router-dom";
 import { useGameThemeContext } from "../context/themeContext";
 import { useRoomContext } from "../context/roomContext";
 import { usePlayerNameContext } from "../context/playerName";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const ChessRoomMenu: React.FC = () => {
   const [showCreateRoom, setShowCreateRoom] = useState(false);
   const [showJoinRoom, setShowJoinRoom] = useState(false);
   const [roomCode, setRoomCode] = useState("");
   const [copied, setCopied] = useState(false);
-  const {isDark, themeClasses, toggleTheme, cardClasses, primaryButtonClasses, buttonClasses, inputClasses} = useGameThemeContext();
-  const {generatedRoomCode, setGeneratedRoomCode, generateRoomCode} = useRoomContext();
-  const {playerName, setPlayerName} = usePlayerNameContext();
+  const {
+    isDark,
+    themeClasses,
+    toggleTheme,
+    cardClasses,
+    primaryButtonClasses,
+    buttonClasses,
+    inputClasses,
+  } = useGameThemeContext();
+  const { generatedRoomCode, setGeneratedRoomCode, generateRoomCode } =
+    useRoomContext();
+  const { playerName, setPlayerName } = usePlayerNameContext();
+  const roomMenu = useRef<HTMLDivElement | null>(null);
+
+   useGSAP(() => {
+      gsap.fromTo(
+        roomMenu.current,
+        { opacity: 0, y: -40, scale:0.7 },
+        { opacity: 1, y: 0,scale:1, duration: 3, delay: 3, ease:"back" }
+      );
+    });
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Capitalize first letter, keep rest as typed
     const capitalizedValue = value
       ? value.charAt(0).toUpperCase() + value.slice(1)
-      : '';
+      : "";
     setPlayerName(capitalizedValue);
   };
 
@@ -46,7 +68,7 @@ const ChessRoomMenu: React.FC = () => {
   const handleCreateRoom = () => {
     if (playerName.trim()) {
       const code = generateRoomCode();
-      console.log(" code is ",code)
+      console.log(" code is ", code);
       setShowCreateRoom(true);
       console.log("Creating room with code:", code, "Player:", playerName);
     }
@@ -73,6 +95,7 @@ const ChessRoomMenu: React.FC = () => {
       className={`min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8 transition-colors duration-300 ${themeClasses}`}
     >
       <div
+        ref={roomMenu}
         className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border transition-all ${cardClasses}`}
       >
         {/* Theme Toggle */}
@@ -144,7 +167,9 @@ const ChessRoomMenu: React.FC = () => {
                   </button>
                 </div>
                 <p className="text-xs font-mono mt-3 sm:mt-4 opacity-70">
-                  Waiting for opponent to join...
+                  Waiting for opponent to join <span className="dot">.</span>
+                  <span className="dot">.</span>
+                  <span className="dot">.</span>
                 </p>
               </div>
             </div>
@@ -196,7 +221,7 @@ const ChessRoomMenu: React.FC = () => {
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}
             >
-              <LogIn className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"/>
+              <LogIn className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
               <span>Join Room</span>
             </button>
             <Link to="/">
