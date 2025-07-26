@@ -20,7 +20,7 @@ const Controls: React.FC<ControlProps> = ({
 
   return (
     <section
-      className={`mt-6 p-6 rounded-2xl border transition-all duration-300 ${cardClasses}`}
+      className={`mt-6 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 rounded-2xl border transition-all duration-300 ${cardClasses}`}
     >
       <div className="flex items-center justify-between mb-4 gap-4">
         <div className="flex items-center space-x-3">
@@ -31,35 +31,35 @@ const Controls: React.FC<ControlProps> = ({
                 : "bg-gray-800 border-2 border-gray-300"
             }`}
           ></div>
-          <p className={`text-lg font-mono font-bold ${getTurnColor()}`}>
+          <p className={`text-sm sm:text-base md:text-lg font-mono font-bold ${getTurnColor()}`}>
             Turn: <span className="capitalize">{turn}</span>
           </p>
         </div>
         <button
           onClick={toggleTheme}
-          className={`p-2 rounded-lg border transition-colors ${buttonClasses}`}
+          className={`p-2 sm:p-2.5 md:p-3 rounded-lg border transition-colors ${buttonClasses}`}
           aria-label="Toggle theme"
         >
-          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {isDark ? <Sun className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 " /> : <Moon className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5" />}
         </button>
       </div>
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 w-full">
         <div className="flex-1">
           <button
-            className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl font-mono font-bold cursor-pointer transition-colors ${primaryButtonClasses}`}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 rounded-xl font-mono font-bold cursor-pointer transition-colors ${primaryButtonClasses}`}
             onClick={resetGame}
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Reset Game</span>
+            <span className="text-sm sm:text-base md:text-lg">Reset Game</span>
           </button>
         </div>
 
         <Link to="/" className="flex-1">
           <button
-            className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-xl font-mono font-bold cursor-pointer transition-colors ${buttonClasses}`}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 rounded-xl font-mono font-bold cursor-pointer transition-colors ${buttonClasses}`}
           >
             <LogOut className="w-4 h-4" />
-            <span>Exit</span>
+            <span className="text-sm sm:text-base md:text-lg">Exit</span>
           </button>
         </Link>
       </div>

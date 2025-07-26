@@ -47,14 +47,14 @@ const Square: React.FC<ExtendedSquareProps> = ({
 
   return (
     <div
-      className={`w-22 h-22 flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses()} ${getHighlightClasses()}`}
+      className={`w-full aspect-square flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses()} ${getHighlightClasses()}`}
       onClick={() => onClick(row, col)}
     >
       {piece?.image ? (
         <img
           src={piece.image}
           alt={`${piece.color} ${piece.type}`}
-          className="w-16 h-auto"
+          className="sm:w-14 md:w-17 lg:w-17 h-auto object-contain"
         />
       ) : piece ? (
         <span className={`text-sm font-mono font-bold ${

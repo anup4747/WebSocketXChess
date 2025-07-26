@@ -112,9 +112,9 @@ const Chessboard: React.FC = () => {
     }
   };
   return (
-    <section>
+    <section className="px-4 md:px-8 sm:px-12">
       <div className={`flex items-center justify-center ${getBorder()}`}>
-        <div className="select-none grid grid-cols-8 gap-0 w-[700px] ">
+        <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[700px]">
           {boardState.board.map((row:number, r:number) =>
             row.map((piece, c:number) => (
               <Square
