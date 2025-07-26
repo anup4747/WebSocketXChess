@@ -12,14 +12,24 @@ import { PlayerNameProvider } from "./context/playerName";
 import { BoardStateProvider } from "./context/boardContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { BounceLoader } from "react-spinners";
-
+import { io } from "socket.io-client";
 
 const AppContent: React.FC = () => {
   const { themeClasses } = useGameThemeContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const location = useLocation();
+  const socket = io("localhost:3000")
 
-  
+  function connectSocket(){
+    socket.on("connection", () =>{
+      console.log(socket.id)
+    })
+  }
+
+  useEffect(()=>{
+    connectSocket();
+  },[])
+
 
   useEffect(() => {
     setIsLoading(true);

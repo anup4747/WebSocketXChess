@@ -1,0 +1,65 @@
+# Node.js and npm
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+
+# React build output
+client/build/
+client/node_modules/
+client/build/*
+client/public/*.map
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+
+# Logs
+logs/
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+dist/
+build/
+*.zip
+*.tar.gz
+
+# Testing and coverage
+coverage/
+*.lcov
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Dependency directories
+/lib/
+/deps/
+
+# Other unnecessary files
+*.pid
+*.seed
+*.pid.lock

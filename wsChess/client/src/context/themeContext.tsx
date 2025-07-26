@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
-import type { gameThemeType } from "../types/types";
+import type { GameThemeContextType } from "../types/types";
 
-const GameThemeContext = createContext<gameThemeType | undefined>(undefined);
+const GameThemeContext = createContext<GameThemeContextType | undefined>(undefined);
 
 export const useGameThemeContext = () => {
   const context = useContext(GameThemeContext);
