@@ -12,13 +12,23 @@ const Menu: React.FC = () => {
     "Make your move, master the board.",
     "Strategy awaits—choose your play.",
     "Checkmate begins with a single move.",
-    "Challenge the board, claim your glory.",
     "Pawns to kings, every move counts.",
     "Outwit, outplay, outlast.",
     "The board is set—your move.",
     "Unleash your inner grandmaster.",
     "Tactics and triumph, one move away.",
     "Enter the game, rewrite the endgame.",
+    "Every piece has a purpose—find yours.",
+    "Think ahead, strike smart.",
+    "One board. Infinite possibilities.",
+    "Dominate with every decision.",
+    "Play bold. Win smarter.",
+    "Not just a game—it's your legacy.",
+    "The game favors the fearless.",
+    "Where mind meets mastery.",
+    "Master the moment, own the match.",
+    "See the end before the first move.",
+    "Check your fear. Then check your opponent."
   ];
   const [currentSentence, setCurrentSentence] = useState(sentences[0]);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
