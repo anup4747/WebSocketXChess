@@ -21,7 +21,6 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return false;
   });
-
   const toggleTheme = () => setIsDark((prev) => !prev);
   const themeClasses = isDark ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900';
   const cardClasses = isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200';
@@ -37,7 +36,6 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   const getBorder = isDark
     ? 'border-4 border-white'
     : 'border-4 border-green-700';
-  
   const getHoverClasses = isDark
       ? "hover:bg-gray-600 hover:bg-opacity-50" 
       : "hover:bg-yellow-300 hover:bg-opacity-40";

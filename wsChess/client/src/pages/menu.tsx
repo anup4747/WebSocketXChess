@@ -3,8 +3,9 @@ import React from "react";
 import { Settings, Computer, User, CloudOff, Sun, Moon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
-import { useGameThemeContext } from "../context/themeContext";
 import { useGSAP } from "@gsap/react";
+import { useGameThemeContext } from "../context/themeContext";
+import { useGameModeContext } from "../context/gameModeContext";
 
 gsap.registerPlugin(useGSAP);
 
@@ -35,6 +36,7 @@ const Menu: React.FC = () => {
   const [currentSentence, setCurrentSentence] = useState(sentences[0]);
   const paragraphRef = useRef<HTMLParagraphElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null> (null)
+  const {gameMode, setGameMode} = useGameModeContext();
 
   useGSAP(() => {
       gsap.fromTo(
@@ -122,6 +124,7 @@ const Menu: React.FC = () => {
           </Link>
           <Link to="/playoffline">
             <button
+              onClick={() => setGameMode("offline")}
               className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >
               <CloudOff className="w-5 h-5 sm:w-5 sm:h-5 flex-shrink-0" />

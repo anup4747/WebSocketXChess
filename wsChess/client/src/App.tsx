@@ -1,6 +1,6 @@
 import "./App.css";
 import Menu from "./pages/menu";
-import React,{ useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import PlayChess from "./pages/chessPage";
 import InConstuction from "./pages/inConstruction";
@@ -10,6 +10,7 @@ import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
 import { RoomProvider } from "./context/roomContext";
 import { PlayerNameProvider } from "./context/playerName";
 import { BoardStateProvider } from "./context/boardContext";
+import { GameModeProvider } from "./context/gameModeContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { BounceLoader } from "react-spinners";
 import { io } from "socket.io-client";
@@ -18,17 +19,17 @@ const AppContent: React.FC = () => {
   const { themeClasses } = useGameThemeContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const location = useLocation();
-  const socket = io("localhost:3000")
+  const socket = io("localhost:3000");
 
-  function connectSocket(){
-    socket.on("connection", () =>{
-      console.log("connected from client ")
-    })
+  function connectSocket() {
+    socket.on("connection", () => {
+      console.log("connected from client ");
+    });
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     connectSocket();
-  },[])
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,7 +39,6 @@ const AppContent: React.FC = () => {
 
     return () => clearTimeout(timeout);
   }, [location.pathname]);
-
 
   return (
     <>
@@ -62,8 +62,7 @@ const AppContent: React.FC = () => {
             ChessLeague
             <br />
             <div className="w-full mt-5 flex items-center justify-center">
-
-            <BounceLoader size={50} color="#4FD1C5" />
+              <BounceLoader size={50} color="#4FD1C5" />
             </div>
           </motion.div>
         </div>
@@ -89,13 +88,15 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <PlayerNameProvider>
-      <GameThemeProvider>
-        <RoomProvider>
-          <BoardStateProvider>
-            <AppContent />
-          </BoardStateProvider>
-        </RoomProvider>
-      </GameThemeProvider>
+        <GameThemeProvider>
+      <GameModeProvider>
+          <RoomProvider>
+            <BoardStateProvider>
+              <AppContent />
+            </BoardStateProvider>
+          </RoomProvider>
+      </GameModeProvider>
+        </GameThemeProvider>
     </PlayerNameProvider>
   );
 };

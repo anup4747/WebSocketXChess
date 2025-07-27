@@ -14,13 +14,16 @@ export const usePlayerNameContext = () => {
 export const PlayerNameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [playerName, setPlayerName] = useState("");
+  const [player1Name, setPlayer1Name] = useState("");
+  const [player2Name, setPlayer2Name] = useState("");
 
   return (
     <PlayerNameContext.Provider
       value={{
-        playerName,
-        setPlayerName
+        player1Name,
+        setPlayer1Name,
+        player2Name,
+        setPlayer2Name
     }}
     >
       {children}

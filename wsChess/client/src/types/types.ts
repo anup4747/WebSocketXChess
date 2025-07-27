@@ -2,6 +2,8 @@ export type PieceType = "king" | "queen" | "rook" | "bishop" | "knight" | "pawn"
 
 export type Color = "white" | "black";
 
+export type GameMode = "offline" | "multi" | "ai" | "";
+
 export interface Piece {
   type: PieceType;
   color: Color;
@@ -15,8 +17,10 @@ export interface BoardStateContextType {
 }
 
 export interface PlayerNameContextType {
-  playerName: string;
-  setPlayerName: (name: string) => void;
+  player1Name: string;
+  setPlayer1Name: (name: string) => void;
+  player2Name: string;
+  setPlayer2Name: (name: string) => void;
 }
 
 export interface RoomContextType {
@@ -53,5 +57,11 @@ export interface ExtendedSquareProps extends SquareProps {
   selected: { row: number; col: number } | null;
   isValidMove?: boolean; // valid move highlighting
   isSelected?: boolean;  // check if it is seclected
+}
+
+
+export interface GameModeContextType {
+  gameMode: GameMode;
+  setGameMode: (mode: GameMode) => void;
 }
 
