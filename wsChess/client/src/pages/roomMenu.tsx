@@ -35,7 +35,7 @@ const ChessRoomMenu: React.FC = () => {
   } = useGameThemeContext();
   const { generatedRoomCode, setGeneratedRoomCode, generateRoomCode } =
     useRoomContext();
-  const { playerName, setPlayerName } = usePlayerNameContext();
+  const { player1Name, setPlayer1Name } = usePlayerNameContext();
   const roomMenu = useRef<HTMLDivElement | null>(null);
 
    useGSAP(() => {
@@ -52,7 +52,7 @@ const ChessRoomMenu: React.FC = () => {
     const capitalizedValue = value
       ? value.charAt(0).toUpperCase() + value.slice(1)
       : "";
-    setPlayerName(capitalizedValue);
+    setPlayer1Name(capitalizedValue);
   };
 
   const copyRoomCode = async () => {
@@ -66,17 +66,17 @@ const ChessRoomMenu: React.FC = () => {
   };
 
   const handleCreateRoom = () => {
-    if (playerName.trim()) {
+    if (player1Name.trim()) {
       const code = generateRoomCode();
       console.log(" code is ", code);
       setShowCreateRoom(true);
-      console.log("Creating room with code:", code, "Player:", playerName);
+      console.log("Creating room with code:", code, "Player:", player1Name);
     }
   };
 
   const handleJoinRoom = () => {
-    if (playerName.trim() && roomCode.trim()) {
-      console.log("Joining room:", roomCode, "Player:", playerName);
+    if (player1Name.trim() && roomCode.trim()) {
+      console.log("Joining room:", roomCode, "Player:", player1Name);
       // Handle join room logic here
     }
   };
@@ -84,7 +84,7 @@ const ChessRoomMenu: React.FC = () => {
   const resetMenu = () => {
     setShowCreateRoom(false);
     setShowJoinRoom(false);
-    setPlayerName("");
+    setPlayer1Name("");
     setRoomCode("");
     setGeneratedRoomCode("");
     setCopied(false);
@@ -191,7 +191,7 @@ const ChessRoomMenu: React.FC = () => {
               </label>
               <input
                 type="text"
-                value={playerName}
+                value={player1Name}
                 onChange={handleNameChange}
                 placeholder="Enter your name..."
                 className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border font-mono transition-colors text-sm sm:text-base ${inputClasses}`}
@@ -201,9 +201,9 @@ const ChessRoomMenu: React.FC = () => {
 
             <button
               onClick={handleCreateRoom}
-              disabled={!playerName.trim()}
+              disabled={!player1Name.trim()}
               className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base ${
-                playerName.trim()
+                player1Name.trim()
                   ? primaryButtonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}
@@ -214,9 +214,9 @@ const ChessRoomMenu: React.FC = () => {
 
             <button
               onClick={() => setShowJoinRoom(true)}
-              disabled={!playerName.trim()}
+              disabled={!player1Name.trim()}
               className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 text-sm sm:text-base  ${
-                playerName.trim()
+                player1Name.trim()
                   ? buttonClasses
                   : "bg-gray-400 cursor-not-allowed text-gray-200"
               }`}

@@ -1,6 +1,6 @@
 import Square from "./Square";
 import type { Piece } from "../types/types";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useGameThemeContext } from "../context/themeContext";
 import { useBoardStateContext } from "../context/boardContext";
 import gsap from "gsap";
@@ -13,109 +13,66 @@ const Chessboard: React.FC = () => {
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
-  const { boardState, setBoardState, resetGame } = useBoardStateContext();
+  const { board, turn, selected, updateBoard } = useBoardStateContext();
 
   const handleClick = (row: number, col: number) => {
-    setBoardState((state) => {
-      if (!state.selected) {
-        if (state.board[row][col]?.type == "pawn") {
-          // Calculates the valid pawn moves
-          const pawnValidMoves = getValidPawnMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(pawnValidMoves);
-        } else if (state.board[row][col]?.type === "rook") {
-          // Calculate valid rook moves
-          const hookMoves = getValidRookMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(hookMoves);
-        } else if (state.board[row][col]?.type === "knight") {
-          // Calculate valid knight moves
-          const knightValidMoves = getValidKnightMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(knightValidMoves);
-        } else if (state.board[row][col]?.type === "bishop") {
-          // Calculate valid knight moves
-          const bishopValidMoves = getValidBishopMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(bishopValidMoves);
-        } else if (state.board[row][col]?.type === "queen") {
-          // Calculate valid knight moves
-          const queenValidMoves = getValidQueenMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(queenValidMoves);
-        } else if (state.board[row][col]?.type === "king") {
-          // Calculate valid knight moves
-          const kingValidMoves = getValidKingMoves(
-            row,
-            col,
-            state.board[row][col]!,
-            state.board
-          );
-          setValidMoves(kingValidMoves);
-        } else {
-          setValidMoves([]);
-        }
-        if (state.board[row][col] == null) {
-          setValidMoves([]);
-          return { ...state, selected: null };
-        }
-        if (state.board[row][col]?.color === state.turn) {
-          return { ...state, selected: { row, col } };
-        }
-        return state;
-      } else {
-        const isValid = validMoves.some(
-          (move) => move.row === row && move.col === col
-        );
-
-        if (isValid) {
-          const newBoard = state.board.map((r) => [...r]);
-          newBoard[row][col] = newBoard[state.selected.row][state.selected.col];
-          newBoard[state.selected.row][state.selected.col] = null;
-          // Clear valid moves after moving
-          setValidMoves([]);
-          return {
-            board: newBoard,
-            selected: null,
-            turn: state.turn === "white" ? "black" : "white",
-          };
-        }
+    if (!selected) {
+      if (board[row][col]?.color !== turn) {
         setValidMoves([]);
-        return { ...state, selected: null };
+        return;
       }
-    });
+      let moves: { row: number; col: number }[] = [];
+      if (board[row][col]?.type == "pawn") {
+        // Calculates the valid pawn moves
+        moves = getValidPawnMoves(row, col, board[row][col]!, board);
+      } else if (board[row][col]?.type === "rook") {
+        // Calculate valid rook moves
+        moves = getValidRookMoves(row, col, board[row][col]!, board);
+      } else if (board[row][col]?.type === "knight") {
+        // Calculate valid knight moves
+        moves = getValidKnightMoves(row, col, board[row][col]!, board);
+      } else if (board[row][col]?.type === "bishop") {
+        // Calculate valid knight moves
+        moves = getValidBishopMoves(row, col, board[row][col]!, board);
+      } else if (board[row][col]?.type === "queen") {
+        // Calculate valid knight moves
+        moves = getValidQueenMoves(row, col, board[row][col]!, board);
+      } else if (board[row][col]?.type === "king") {
+        // Calculate valid knight moves
+        moves = getValidKingMoves(row, col, board[row][col]!, board);
+      }
+      setValidMoves(moves);
+      updateBoard(board, turn, { row, col });
+    } else {
+      const isValid = validMoves.some(
+        (move) => move.row === row && move.col === col
+      );
+      if (isValid) {
+        const newBoard = board.map((r) => [...r]);
+        newBoard[row][col] = newBoard[selected.row][selected.col];
+        newBoard[selected.row][selected.col] = null;
+        gsap.to(`.square-${row}-${col}`, {
+          scale: 1.2,
+          duration: 0.3,
+          ease: 'power2.out',
+          yoyo: true,
+          repeat: 1,
+        });
+        setValidMoves([]);
+        updateBoard(newBoard, turn === "white" ? "black" : "white", null);
+      }else{
+        setValidMoves([]);
+        updateBoard(board, turn, null);
+      }
+    }
   };
-
 
   return (
     <section className="px-4 md:px-8 sm:px-12">
-
       <div className="flex items-center justify-center">
-        <div
-          className={`flex items-center justify-center ${getBorder}`}
-        >
+        <div className={`flex items-center justify-center ${getBorder}`}>
           <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[650px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[650px]">
-            {boardState.board.map((row: number, r: number) =>
+            {board.map((row, r: number) =>
               row.map((piece, c: number) => (
                 <Square
                   key={`${r}-${c}`}
@@ -123,14 +80,12 @@ const Chessboard: React.FC = () => {
                   col={c}
                   piece={piece}
                   onClick={handleClick}
-                  selected={boardState.selected}
+                  selected={selected}
                   isValidMove={validMoves.some(
                     (move) => move.row === r && move.col === c
                   )}
-                  isSelected={
-                    boardState.selected?.row === r &&
-                    boardState.selected?.col === c
-                  }
+                  isSelected={selected?.row === r && selected?.col === c}
+                  className={`square-${r}-${c}`}
                 />
               ))
             )}

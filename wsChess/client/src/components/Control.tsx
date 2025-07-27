@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import type { ControlProps } from "../types/types";
 import { LogOut, RotateCcw, Sun, Moon } from "lucide-react";
 import { useGameThemeContext } from "../context/themeContext";
+import { useBoardStateContext } from "../context/boardContext";
 
 const Controls: React.FC<ControlProps> = ({
-  turn,
   resetGame,
 }) => {
   const {isDark, buttonClasses, cardClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
+  const {turn} = useBoardStateContext()
   
   return (
     <section

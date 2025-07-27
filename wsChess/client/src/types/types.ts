@@ -10,10 +10,18 @@ export interface Piece {
   image?: string; 
 }
 
+export interface BoardState {
+  board: (Piece | null)[][];
+  selected: { row: number; col: number } | null;
+  turn: Color;
+}
+
 export interface BoardStateContextType {
   board: (Piece | null)[][];
   selected: { row: number; col: number } | null;
-  turn: "white" | "black";
+  turn: Color;
+  resetGame?: () => void;
+  updateBoard: (newBoard: (Piece | null)[][], newTurn: Color, newSelected: { row: number; col: number } | null) => void;
 }
 
 export interface PlayerNameContextType {
@@ -57,8 +65,8 @@ export interface ExtendedSquareProps extends SquareProps {
   selected: { row: number; col: number } | null;
   isValidMove?: boolean; // valid move highlighting
   isSelected?: boolean;  // check if it is seclected
+  className?: string;
 }
-
 
 export interface GameModeContextType {
   gameMode: GameMode;

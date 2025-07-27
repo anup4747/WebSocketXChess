@@ -8,6 +8,7 @@ const Square: React.FC<ExtendedSquareProps> = ({
   onClick,
   isValidMove,
   isSelected,
+  className
 }) => {
   const isLight = (row + col) % 2 === 0;
   const isSelectedPiece = isSelected && piece?.type !== null;
@@ -42,7 +43,7 @@ const Square: React.FC<ExtendedSquareProps> = ({
 
   return (
     <div
-      className={`w-full aspect-square flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses} ${getHighlightClasses()}`}
+      className={`w-full aspect-square flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses} ${getHighlightClasses()} ${className || ''}`}
       onClick={() => onClick(row, col)}
     >
       {piece?.image ? (

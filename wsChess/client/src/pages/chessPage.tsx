@@ -15,10 +15,10 @@ gsap.registerPlugin(useGSAP);
 const PlayChess: React.FC = () => {
   const { themeClasses } = useGameThemeContext();
   const control = useRef<HTMLDivElement | null>(null);
-  const { boardState, resetGame } = useBoardStateContext();
+  const { turn, resetGame } = useBoardStateContext();
   const playerDashBoard = useRef<HTMLDivElement | null>(null);
   const board = useRef<HTMLDivElement | null>(null);
-  const {gameMode,setGameMode} = useGameModeContext();
+  const {setGameMode} = useGameModeContext();
   const {player1Name, setPlayer1Name, player2Name, setPlayer2Name} = usePlayerNameContext();
   const location = useLocation();
 
@@ -60,13 +60,13 @@ const PlayChess: React.FC = () => {
           <PlayerCard
             name={player1Name} // or "Friend", "Player 1", etc. – make dynamic if needed
             points={12} // You can make this dynamic with state or context
-            isTurn={boardState.turn === "black"}
+            isTurn={turn === "black"}
             />
 
           <PlayerCard
             name={player2Name} // Make dynamic based on mode
             points={18}
-            isTurn={boardState.turn === "white"}
+            isTurn={turn === "white"}
           />
       </div> 
       <div ref={board}>
@@ -74,7 +74,7 @@ const PlayChess: React.FC = () => {
       <Chessboard />
       </div>
       <div ref={control} className="flex justify-center items-center px-4 md:px-8 sm:px-12">
-        <Controls resetGame={resetGame} turn={boardState.turn} />
+        <Controls resetGame={resetGame} turn={turn} />
       </div>
     </section>
   );

@@ -36,7 +36,7 @@ const Menu: React.FC = () => {
   const [currentSentence, setCurrentSentence] = useState(sentences[0]);
   const paragraphRef = useRef<HTMLParagraphElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null> (null)
-  const {gameMode, setGameMode} = useGameModeContext();
+  const {setGameMode} = useGameModeContext();
 
   useGSAP(() => {
       gsap.fromTo(
@@ -73,7 +73,7 @@ const Menu: React.FC = () => {
     >
       <div
         ref={menuRef}
-        className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl border transition-all ${cardClasses}`}
+        className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl border transition-all ${cardClasses}`}
       >
         <div className="flex justify-end mb-4 sm:mb-6">
           <button
