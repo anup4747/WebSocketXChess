@@ -5,6 +5,7 @@ import { useBoardStateContext } from "../context/boardContext";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Controls from "../components/Control";
+import PlayerCard from "../components/playerCard";
 
 gsap.registerPlugin(useGSAP);
 
@@ -12,8 +13,20 @@ const PlayChess: React.FC = () => {
   const { themeClasses } = useGameThemeContext();
   const control = useRef<HTMLDivElement | null>(null);
   const { boardState, resetGame } = useBoardStateContext();
+  const playerDashBoard = useRef<HTMLDivElement | null>(null);
+  const board = useRef<HTMLDivElement | null>(null);
 
   useGSAP(() => {
+     gsap.fromTo(
+      playerDashBoard.current,
+      { opacity: 0, y: -40 },
+      { opacity: 1, y: 0, duration: 1.7, delay: 3.5, ease: "sine" }
+    );
+    gsap.fromTo(
+      board.current,
+      { opacity: 0, y: -40 },
+      { opacity: 1, y: 0, duration: 1.7, delay: 4.5, ease: "sine" }
+    );
     gsap.fromTo(
       control.current,
       { opacity: 0, y: -30 },
@@ -24,7 +37,24 @@ const PlayChess: React.FC = () => {
     <section
       className={`h-screen flex flex-col justify-center ${themeClasses} `}
     >
+      <div ref={playerDashBoard} className="flex justify-between mb-6 px-4 md:px-7 sm:px-12">
+
+          <PlayerCard
+            name={"AI Player"} // or "Friend", "Player 1", etc. – make dynamic if needed
+            points={12} // You can make this dynamic with state or context
+            isTurn={boardState.turn === "black"}
+            />
+
+          <PlayerCard
+            name={"Player 1"} // Make dynamic based on mode
+            points={18}
+            isTurn={boardState.turn === "white"}
+          />
+      </div> 
+      <div ref={board}>
+
       <Chessboard />
+      </div>
       <div ref={control} className="flex justify-center items-center px-4 md:px-8 sm:px-12">
         <Controls resetGame={resetGame} turn={boardState.turn} />
       </div>

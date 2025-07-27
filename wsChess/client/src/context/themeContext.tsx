@@ -34,6 +34,14 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   const primaryButtonClasses = isDark
     ? 'bg-blue-600 hover:bg-blue-700 text-white'
     : 'bg-blue-600 hover:bg-blue-700 text-white';
+  const getBorder = isDark
+    ? 'border-4 border-white'
+    : 'border-4 border-green-700';
+  
+  const getHoverClasses = isDark
+      ? "hover:bg-gray-600 hover:bg-opacity-50" 
+      : "hover:bg-yellow-300 hover:bg-opacity-40";
+
   return (
     <GameThemeContext.Provider
       value={{
@@ -43,7 +51,9 @@ export const GameThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         cardClasses,
         inputClasses,
         buttonClasses,
-        primaryButtonClasses
+        primaryButtonClasses,
+        getBorder,
+        getHoverClasses
     }}
     >
       {children}

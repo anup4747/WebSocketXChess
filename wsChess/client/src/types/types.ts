@@ -33,6 +33,8 @@ export interface GameThemeContextType {
   cardClasses?: string;
   primaryButtonClasses?: string;
   inputClasses?: string;
+  getBorder?: string;
+  getHoverClasses?:string
 }
 
 export interface ControlProps{

@@ -70,7 +70,7 @@ const AppContent: React.FC = () => {
       )}
 
       <section
-        className={`flex flex-col items-center justify-center ${themeClasses}`}
+        className={`flex flex-col items-center justify-center h-screen ${themeClasses}`}
       >
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>

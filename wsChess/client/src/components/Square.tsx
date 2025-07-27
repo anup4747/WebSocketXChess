@@ -11,7 +11,7 @@ const Square: React.FC<ExtendedSquareProps> = ({
 }) => {
   const isLight = (row + col) % 2 === 0;
   const isSelectedPiece = isSelected && piece?.type !== null;
-  const {isDark} = useGameThemeContext()
+  const {isDark, getHoverClasses} = useGameThemeContext()
 
   const getHighlightClasses = () => {
     let classes = "";
@@ -39,15 +39,10 @@ const Square: React.FC<ExtendedSquareProps> = ({
     }
   };
 
-  const getHoverClasses = () => {
-    return isDark 
-      ? "hover:bg-gray-600 hover:bg-opacity-50" 
-      : "hover:bg-yellow-300 hover:bg-opacity-40";
-  };
 
   return (
     <div
-      className={`w-full aspect-square flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses()} ${getHighlightClasses()}`}
+      className={`w-full aspect-square flex items-center justify-center transition duration-100  ${isValidMove ? "drop-shadow-black opacity-80 highlight-valid-move" : ""} ${getSquareColor()} ${getHoverClasses} ${getHighlightClasses()}`}
       onClick={() => onClick(row, col)}
     >
       {piece?.image ? (

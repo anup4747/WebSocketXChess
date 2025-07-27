@@ -1,7 +1,6 @@
 import Square from "./Square";
 import type { Piece } from "../types/types";
 import React, { useState, useRef } from "react";
-import Controls from "./Control";
 import { useGameThemeContext } from "../context/themeContext";
 import { useBoardStateContext } from "../context/boardContext";
 import gsap from "gsap";
@@ -10,20 +9,11 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(useGSAP);
 
 const Chessboard: React.FC = () => {
-  const { isDark } = useGameThemeContext();
+  const { getBorder } = useGameThemeContext();
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
   const { boardState, setBoardState, resetGame } = useBoardStateContext();
-  const board = useRef<HTMLDivElement | null>(null);
-
-  useGSAP(() => {
-    gsap.fromTo(
-      board.current,
-      { opacity: 0, y: -40 },
-      { opacity: 1, y: 0, duration: 1.7, delay: 3.5, ease: "sine" }
-    );
-  });
 
   const handleClick = (row: number, col: number) => {
     setBoardState((state) => {
@@ -116,21 +106,15 @@ const Chessboard: React.FC = () => {
     });
   };
 
-  const getBorder = () => {
-    if (isDark) {
-      return "border-4 border-white";
-    } else {
-      return "border-4 border-green-700";
-    }
-  };
+
   return (
     <section className="px-4 md:px-8 sm:px-12">
+
       <div className="flex items-center justify-center">
         <div
-          ref={board}
-          className={`flex items-center justify-center ${getBorder()}`}
+          className={`flex items-center justify-center ${getBorder}`}
         >
-          <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[700px]">
+          <div className="select-none grid grid-cols-8 gap-0 w-full max-w-[650px] sm:w-[90vw] sm:max-w-[600px] md:max-w-[650px]">
             {boardState.board.map((row: number, r: number) =>
               row.map((piece, c: number) => (
                 <Square

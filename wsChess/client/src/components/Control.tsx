@@ -10,17 +10,9 @@ const Controls: React.FC<ControlProps> = ({
 }) => {
   const {isDark, buttonClasses, cardClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
   
-  const getTurnColor = () => {
-    if (turn === "white") {
-      return isDark ? "text-gray-200" : "text-gray-800";
-    } else {
-      return isDark ? "text-gray-300" : "text-gray-700";
-    }
-  };
-
   return (
     <section
-      className={`mt-6 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 w-full max-w-[700px] sm:w-[90vw] sm:max-w-[610px] md:max-w-[710px] rounded-2xl border transition-all duration-300 ${cardClasses}`}
+      className={`mt-6 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 w-full max-w-[710px] sm:w-[90vw] sm:max-w-[610px] md:max-w-[670px] rounded-2xl border transition-all duration-300 ${cardClasses}`}
     >
       <div className="flex items-center justify-between mb-4 gap-4">
         <div className="flex items-center space-x-3">
@@ -31,7 +23,7 @@ const Controls: React.FC<ControlProps> = ({
                 : "bg-gray-800 border-2 border-gray-300"
             }`}
           ></div>
-          <p className={`text-sm sm:text-base md:text-lg font-mono font-bold ${getTurnColor()}`}>
+          <p className={`text-sm sm:text-base md:text-lg font-mono font-bold `}>
             Turn: <span className="capitalize">{turn}</span>
           </p>
         </div>
