@@ -9,6 +9,7 @@ import PlayerCard from "../components/playerCard";
 import { useGameModeContext } from "../context/gameModeContext";
 import { usePlayerNameContext } from "../context/playerName";
 import { useLocation } from "react-router-dom"; 
+import { usePoitnsContext } from "../context/pointsContext";
 
 gsap.registerPlugin(useGSAP);
 
@@ -21,6 +22,7 @@ const PlayChess: React.FC = () => {
   const {setGameMode} = useGameModeContext();
   const {player1Name, setPlayer1Name, player2Name, setPlayer2Name} = usePlayerNameContext();
   const location = useLocation();
+  const {blackPoints, whitePoints} = usePoitnsContext();
 
  useEffect(() => {
     if (location.pathname === "/playoffline") {
@@ -59,13 +61,13 @@ const PlayChess: React.FC = () => {
 
           <PlayerCard
             name={player1Name} // or "Friend", "Player 1", etc. – make dynamic if needed
-            points={12} // You can make this dynamic with state or context
+            points={blackPoints} // You can make this dynamic with state or context
             isTurn={turn === "black"}
             />
 
           <PlayerCard
             name={player2Name} // Make dynamic based on mode
-            points={18}
+            points={whitePoints}
             isTurn={turn === "white"}
           />
       </div> 

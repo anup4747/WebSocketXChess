@@ -8,6 +8,7 @@ export interface Piece {
   type: PieceType;
   color: Color;
   image?: string; 
+  points:number;
 }
 
 export interface BoardState {
@@ -29,6 +30,13 @@ export interface PlayerNameContextType {
   setPlayer1Name: (name: string) => void;
   player2Name: string;
   setPlayer2Name: (name: string) => void;
+}
+
+export interface PiecePointsContextType {
+  blackPoints: number;
+  setBlackPoints: (name: number) => void;
+  whitePoints: number;
+  setWhitePoints: (name: number) => void;
 }
 
 export interface RoomContextType {

@@ -11,6 +11,7 @@ import { RoomProvider } from "./context/roomContext";
 import { PlayerNameProvider } from "./context/playerName";
 import { BoardStateProvider } from "./context/boardContext";
 import { GameModeProvider } from "./context/gameModeContext";
+import { PointsContextProvider } from "./context/pointsContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { BounceLoader } from "react-spinners";
 import { io } from "socket.io-client";
@@ -88,15 +89,17 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <PlayerNameProvider>
-        <GameThemeProvider>
-      <GameModeProvider>
+      <GameThemeProvider>
+        <GameModeProvider>
           <RoomProvider>
             <BoardStateProvider>
-              <AppContent />
+              <PointsContextProvider>
+                <AppContent />
+              </PointsContextProvider>
             </BoardStateProvider>
           </RoomProvider>
-      </GameModeProvider>
-        </GameThemeProvider>
+        </GameModeProvider>
+      </GameThemeProvider>
     </PlayerNameProvider>
   );
 };

@@ -1,10 +1,13 @@
 import Square from "./Square";
 import type { Piece } from "../types/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGameThemeContext } from "../context/themeContext";
 import { useBoardStateContext } from "../context/boardContext";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { calculatePoints } from "../context/pointsContext";
+import { usePoitnsContext } from "../context/pointsContext";
+import { initialBoard } from "../utils/initialBoardState";
 
 gsap.registerPlugin(useGSAP);
 
@@ -13,9 +16,18 @@ const Chessboard: React.FC = () => {
   const [validMoves, setValidMoves] = useState<{ row: number; col: number }[]>(
     []
   );
+  const { setBlackPoints, setWhitePoints } = usePoitnsContext();
   const { board, turn, selected, updateBoard } = useBoardStateContext();
 
+  useEffect(() => {
+    const { whitePoints, blackPoints } = calculatePoints(initialBoard);
+    setWhitePoints(whitePoints);
+    setBlackPoints(blackPoints);
+
+  },[setBlackPoints, setWhitePoints]);
+
   const handleClick = (row: number, col: number) => {
+
     if (!selected) {
       if (board[row][col]?.color !== turn) {
         setValidMoves([]);
@@ -54,13 +66,14 @@ const Chessboard: React.FC = () => {
         gsap.to(`.square-${row}-${col}`, {
           scale: 1.2,
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
           yoyo: true,
           repeat: 1,
         });
         setValidMoves([]);
         updateBoard(newBoard, turn === "white" ? "black" : "white", null);
-      }else{
+        
+      } else {
         setValidMoves([]);
         updateBoard(board, turn, null);
       }
