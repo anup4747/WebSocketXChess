@@ -98,7 +98,6 @@ const ChessRoomMenu: React.FC = () => {
         ref={roomMenu}
         className={`w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-md rounded-3xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl border transition-all ${cardClasses}`}
       >
-        {/* Theme Toggle */}
         <div className="flex justify-end mb-4 sm:mb-6">
           <button
             onClick={toggleTheme}
@@ -184,7 +183,6 @@ const ChessRoomMenu: React.FC = () => {
 
         {!showCreateRoom && !showJoinRoom && (
           <div className="space-y-3 sm:space-y-4">
-            {/* Player Name Input */}
             <div className="mb-4 sm:mb-6">
               <label className="block text-xs sm:text-sm font-mono font-bold mb-2">
                 Your Name

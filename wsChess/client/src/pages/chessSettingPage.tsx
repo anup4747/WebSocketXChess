@@ -85,8 +85,6 @@ const ChessSettingsPage: React.FC = () => {
         </div>
 
         <div className="space-y-6 sm:space-y-8">
-          
-          {/* Music Level Setting */}
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center space-x-3">
               <div className={`p-2 rounded-lg ${isDark ? "bg-gray-700" : "bg-gray-100"}`}>
@@ -198,7 +196,6 @@ const ChessSettingsPage: React.FC = () => {
           </div>
 
 
-          {/* Home Button */}
           <Link to="/" className="block">
             <button
               className={`w-full px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-mono font-bold transition-colors flex items-center justify-center space-x-2 sm:space-x-3 cursor-pointer text-sm sm:text-base ${buttonClasses}`}
@@ -209,13 +206,11 @@ const ChessSettingsPage: React.FC = () => {
           </Link>
         </div>
 
-        {/* Footer */}
         <div className={`text-center text-xs font-mono mt-6 sm:mt-8 ${isDark ? "text-gray-500" : "text-gray-400"}`}>
           Chess Game Settings v1.0
         </div>
       </div>
 
-      {/* Custom CSS for sliders */}
       <style tsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;

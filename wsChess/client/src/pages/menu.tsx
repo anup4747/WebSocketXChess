@@ -64,7 +64,7 @@ const Menu: React.FC = () => {
       });
       animateText(); 
     }, 3000);
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval); 
   }, []);
 
   return (

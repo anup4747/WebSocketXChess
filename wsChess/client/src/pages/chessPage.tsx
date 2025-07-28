@@ -61,12 +61,12 @@ const PlayChess: React.FC = () => {
 
           <PlayerCard
             name={player1Name} // or "Friend", "Player 1", etc. – make dynamic if needed
-            points={blackPoints} // You can make this dynamic with state or context
+            points={blackPoints} 
             isTurn={turn === "black"}
             />
 
           <PlayerCard
-            name={player2Name} // Make dynamic based on mode
+            name={player2Name} 
             points={whitePoints}
             isTurn={turn === "white"}
           />
