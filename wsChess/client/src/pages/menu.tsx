@@ -131,7 +131,7 @@ const Menu: React.FC = () => {
               <span>Play Offline</span>
             </button>
           </Link>
-          <Link to="/construction">
+          <Link to="/setting">
             <button
               className={`w-full  px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl flex items-center justify-center space-x-2 sm:space-x-3 font-mono transition-colors cursor-pointer text-sm sm:text-base ${buttonClasses}`}
             >

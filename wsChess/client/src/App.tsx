@@ -6,6 +6,7 @@ import PlayChess from "./pages/chessPage";
 import InConstuction from "./pages/inConstruction";
 import PageNotFound from "./pages/pageNotFound";
 import ChessRoomMenu from "./pages/roomMenu";
+import ChessSettingsPage from "./pages/chessSettingPage";
 import { GameThemeProvider, useGameThemeContext } from "./context/themeContext";
 import { RoomProvider } from "./context/roomContext";
 import { PlayerNameProvider } from "./context/playerName";
@@ -78,6 +79,7 @@ const AppContent: React.FC = () => {
             <Route path="/playoffline" element={<PlayChess />} />
             <Route path="/construction" element={<InConstuction />} />
             <Route path="/roommenu" element={<ChessRoomMenu />} />
+            <Route path="/setting" element={<ChessSettingsPage />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </AnimatePresence>
