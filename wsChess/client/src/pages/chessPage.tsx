@@ -57,7 +57,7 @@ const PlayChess: React.FC = () => {
     <section
       className={`h-screen flex flex-col justify-center ${themeClasses} `}
     >
-      <div ref={playerDashBoard} className="flex justify-between mb-6 px-4 md:px-7 sm:px-12">
+      <div ref={playerDashBoard} className="flex justify-between mb-2 px-4 md:px-7 sm:px-12">
 
           <PlayerCard
             name={player1Name} // or "Friend", "Player 1", etc. – make dynamic if needed

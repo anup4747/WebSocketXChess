@@ -1,6 +1,9 @@
 TO DO'S 
 
-- add points
+
+- adjust all css according screen
+- make all responciveeness withiout tailwind 
+- change points according to board state
 - add section of which pieces are removed or killed 
 - add timer (optional)
 - add context for 

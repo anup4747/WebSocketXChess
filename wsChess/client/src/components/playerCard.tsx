@@ -19,10 +19,10 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ name, points, isTurn }) => {
         `}
       >
         <div className="flex flex-col ">
-          <p className="text-center font-mono">
+          <p className="font-mono">
             <span className="font-bold">{name}</span>
             <br />
-            <span className="text-sm opacity-90">
+            <span className="opacity-90">
               Points: {points}
             </span>
           </p>
