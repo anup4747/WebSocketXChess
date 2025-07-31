@@ -1,12 +1,11 @@
 TO DO'S 
 
-
 - adjust all css according screen
 - make all responciveeness withiout tailwind 
 - change points according to board state
 - add section of which pieces are removed or killed 
 - add timer (optional)
-- add context for 
+- add context for game mode 
 
 - create a room to play with websocket
 - if user is offline for 1 min it will stay still and then the room will deleted automatically afterwards
