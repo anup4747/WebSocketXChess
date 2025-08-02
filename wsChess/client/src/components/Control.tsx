@@ -30,7 +30,7 @@ const Controls: React.FC<ControlProps> = ({
         </div>
         <button
           onClick={toggleTheme}
-          className={`p-2 sm:p-2.5 md:p-3 rounded-lg border transition-colors ${buttonClasses}`}
+          className={`p-2 sm:p-2.5 md:p-3 lg:py-2 lg:px-2 rounded-lg border transition-colors ${buttonClasses}`}
           aria-label="Toggle theme"
         >
           {isDark ? <Sun className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 " /> : <Moon className="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5" />}
@@ -39,7 +39,7 @@ const Controls: React.FC<ControlProps> = ({
       <div className="flex flex-col sm:flex-row gap-3 w-full">
         <div className="flex-1">
           <button
-            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 rounded-xl font-mono font-bold cursor-pointer transition-colors ${primaryButtonClasses}`}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 lg:py-3 rounded-xl font-mono font-bold cursor-pointer transition-colors ${primaryButtonClasses}`}
             onClick={resetGame}
           >
             <RotateCcw className="w-4 h-4" />
@@ -49,7 +49,7 @@ const Controls: React.FC<ControlProps> = ({
 
         <Link to="/" className="flex-1">
           <button
-            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 rounded-xl font-mono font-bold cursor-pointer transition-colors ${buttonClasses}`}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 lg:py-3 rounded-xl font-mono font-bold cursor-pointer transition-colors ${buttonClasses}`}
           >
             <LogOut className="w-4 h-4" />
             <span className="text-sm sm:text-base md:text-lg">Exit</span>
