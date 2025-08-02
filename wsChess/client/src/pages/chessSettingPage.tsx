@@ -12,12 +12,12 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGameThemeContext } from "../context/themeContext";
+import { useVolumeStateContext } from "../context/volumeContext";
 
 const ChessSettingsPage: React.FC = () => {
   const { isDark, themeClasses, cardClasses, buttonClasses, inputClasses, toggleTheme } = useGameThemeContext();
   
-  const [musicLevel, setMusicLevel] = useState(50);
-  const [soundLevel, setSoundLevel] = useState(65);
+  const {musicLevel, soundLevel, setMusicLevel,setSoundLevel} = useVolumeStateContext(); 
   const [selectedTheme, setSelectedTheme] = useState("system");
   const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   

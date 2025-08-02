@@ -81,3 +81,10 @@ export interface GameModeContextType {
   setGameMode: (mode: GameMode) => void;
 }
 
+export interface VolumeStateContextType{
+  musicLevel: number;
+  setMusicLevel: (level: number) => void;
+  soundLevel: number;
+  setSoundLevel: (name: number) => void;
+}
+
