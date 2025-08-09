@@ -14,25 +14,14 @@ import { BoardStateProvider } from "./context/boardContext";
 import { GameModeProvider } from "./context/gameModeContext";
 import { PointsContextProvider } from "./context/pointsContext";
 import { VolumeStateProvider } from "./context/volumeContext";
+import { SocketIOProvider } from "./context/SocketIOContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { BounceLoader } from "react-spinners";
-import { io } from "socket.io-client";
 
 const AppContent: React.FC = () => {
   const { themeClasses } = useGameThemeContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const location = useLocation();
-  const socket = io("localhost:3000");
-
-  function connectSocket() {
-    socket.on("connection", () => {
-      console.log("connected from client ");
-    });
-  }
-
-  useEffect(() => {
-    connectSocket();
-  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -91,21 +80,23 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <PlayerNameProvider>
-      <GameThemeProvider>
-        <VolumeStateProvider>
-          <GameModeProvider>
-            <RoomProvider>
-              <BoardStateProvider>
-                <PointsContextProvider>
-                  <AppContent />
-                </PointsContextProvider>
-              </BoardStateProvider>
-            </RoomProvider>
-          </GameModeProvider>
-        </VolumeStateProvider>
-      </GameThemeProvider>
-    </PlayerNameProvider>
+    <GameThemeProvider>
+      <VolumeStateProvider>
+        <GameModeProvider>
+          <SocketIOProvider>
+            <PlayerNameProvider>
+              <RoomProvider>
+                <BoardStateProvider>
+                  <PointsContextProvider>
+                    <AppContent />
+                  </PointsContextProvider>
+                </BoardStateProvider>
+              </RoomProvider>
+            </PlayerNameProvider>
+          </SocketIOProvider>
+        </GameModeProvider>
+      </VolumeStateProvider>
+    </GameThemeProvider>
   );
 };
 

@@ -33,18 +33,18 @@ const ChessRoomMenu: React.FC = () => {
     buttonClasses,
     inputClasses,
   } = useGameThemeContext();
-  const { generatedRoomCode, setGeneratedRoomCode, generateRoomCode } =
+  const { generatedRoomCode, createRoom, joinRoom, leaveRoom, resetRoom } =
     useRoomContext();
   const { player1Name, setPlayer1Name } = usePlayerNameContext();
   const roomMenu = useRef<HTMLDivElement | null>(null);
 
-   useGSAP(() => {
-      gsap.fromTo(
-        roomMenu.current,
-        { opacity: 0, y: -40, scale:0.7 },
-        { opacity: 1, y: 0,scale:1, duration: 2.5, delay: 3, ease:"back" }
-      );
-    });
+  useGSAP(() => {
+    gsap.fromTo(
+      roomMenu.current,
+      { opacity: 0, y: -40, scale: 0.7 },
+      { opacity: 1, y: 0, scale: 1, duration: 2.5, delay: 3, ease: "back" }
+    );
+  });
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -67,27 +67,30 @@ const ChessRoomMenu: React.FC = () => {
 
   const handleCreateRoom = () => {
     if (player1Name.trim()) {
-      const code = generateRoomCode();
-      console.log(" code is ", code);
+      createRoom(player1Name);
       setShowCreateRoom(true);
-      console.log("Creating room with code:", code, "Player:", player1Name);
+      console.log("Creating room with code:", roomCode, "Player:", player1Name);
     }
   };
 
   const handleJoinRoom = () => {
     if (player1Name.trim() && roomCode.trim()) {
+      joinRoom(roomCode, player1Name);
+      setShowJoinRoom(true);
       console.log("Joining room:", roomCode, "Player:", player1Name);
       // Handle join room logic here
     }
   };
 
   const resetMenu = () => {
+    leaveRoom();
     setShowCreateRoom(false);
     setShowJoinRoom(false);
     setPlayer1Name("");
     setRoomCode("");
-    setGeneratedRoomCode("");
+    setRoomCode("");
     setCopied(false);
+    resetRoom();
   };
 
   return (
