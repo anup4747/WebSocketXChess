@@ -6,6 +6,7 @@ TO DO'S
 - add section of which pieces are removed or killed 
 - add timer (optional)
 - add context for game mode 
+- error in joining room
 
 - create a room to play with websocket
 - if user is offline for 1 min it will stay still and then the room will deleted automatically afterwards

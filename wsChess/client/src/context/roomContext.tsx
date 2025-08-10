@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSocketIO } from "./SocketIOContext";
 
-type RoomContextType = {
+interface RoomContextType  {
   generatedRoomCode: string;
   setGeneratedRoomCode: (code: string) => void;
   createRoom: (playerName: string) => void;
@@ -29,23 +29,29 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!socket) return;
 
     socket.on("roomCreated", (code: string) => {
-      console.log("Successfully created:", code);
       setGeneratedRoomCode(code);
+      console.log("Successfully created:", code);
     });
 
     socket.on("roomJoined", (code: string) => {
-      console.log("Successfully joined:", code);
       setGeneratedRoomCode(code);
+      console.log("Successfully joined:", code);
     });
 
     socket.on("leaveRoom", (code: string) => {
-      console.log("Room Closed:", code);
       setGeneratedRoomCode("");
+      console.log("Room Closed:", code);
+    });
+
+    socket.on("error", (message: string) => {
+      console.error("Error:", message);
     });
 
     return () => {
       socket?.off("roomCreated");
       socket?.off("roomJoined");
+      socket?.off("leaveRoom");
+      socket?.off("error");
     };
   }, [socket]);
 

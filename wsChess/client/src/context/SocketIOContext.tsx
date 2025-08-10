@@ -2,18 +2,18 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-type ServerToClientEvents = {
+interface ServerToClientEvents  {
   updateBoard: (data: any) => void;
   playerJoined: (playerName: string) => void;
 };
 
-type ClientToServerEvents = {
+interface ClientToServerEvents  {
   makeMove: (moveData: any) => void;
   joinRoom: (roomCode: string, playerName: string) => void;
   leaveRoom: () => void;
 };
 
-type SocketContextType = {
+interface SocketContextType {
   socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
   isConnected: boolean;
   sendEvent: <K extends keyof ClientToServerEvents>(

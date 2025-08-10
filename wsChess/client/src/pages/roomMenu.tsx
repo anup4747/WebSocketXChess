@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Crown,
   Users,
@@ -37,6 +37,7 @@ const ChessRoomMenu: React.FC = () => {
     useRoomContext();
   const { player1Name, setPlayer1Name } = usePlayerNameContext();
   const roomMenu = useRef<HTMLDivElement | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -45,6 +46,12 @@ const ChessRoomMenu: React.FC = () => {
       { opacity: 1, y: 0, scale: 1, duration: 2.5, delay: 3, ease: "back" }
     );
   });
+
+  useEffect(() => {
+    if (generatedRoomCode) {
+      console.log("Updated room code:", generatedRoomCode);
+    }
+  }, [generatedRoomCode]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -68,13 +75,16 @@ const ChessRoomMenu: React.FC = () => {
   const handleCreateRoom = () => {
     if (player1Name.trim()) {
       createRoom(player1Name);
+      setIsCreating(true);
       setShowCreateRoom(true);
       console.log("Creating room with code:", generatedRoomCode, "Player:", player1Name);
     }
   };
 
   const handleJoinRoom = () => {
-    if (player1Name.trim() && generatedRoomCode.trim()) {
+    if (player1Name.trim() ) {
+      console.log(generatedRoomCode)
+      setIsCreating(false);
       joinRoom(generatedRoomCode, player1Name);
       setShowJoinRoom(true);
       console.log("Joining room:", generatedRoomCode, "Player:", player1Name);
@@ -143,10 +153,10 @@ const ChessRoomMenu: React.FC = () => {
                   <Check className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <h3 className="text-base sm:text-lg font-bold font-mono text-green-500 mb-2">
-                  Room Created!
+                  {isCreating ? "Room Created!" : "Room Joined!"}
                 </h3>
                 <p className="text-sm font-mono mb-3 sm:mb-4">
-                  Share this code with your friend:
+                  {isCreating ? "Share this code with your friend:" : "Waiting for opponent..."}
                 </p>
                 <div className="flex items-center justify-center space-x-2">
                   <div
@@ -156,6 +166,7 @@ const ChessRoomMenu: React.FC = () => {
                   >
                     {generatedRoomCode}
                   </div>
+                  {isCreating && (
                   <button
                     onClick={copyRoomCode}
                     className={`p-2 rounded-lg transition-colors ${buttonClasses}`}
@@ -167,6 +178,7 @@ const ChessRoomMenu: React.FC = () => {
                       <Copy className="w-4 h-4" />
                     )}
                   </button>
+                  )}
                 </div>
                 <p className="text-xs font-mono mt-3 sm:mt-4 opacity-70">
                   Waiting for opponent to join <span className="dot">.</span>

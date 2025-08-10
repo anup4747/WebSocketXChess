@@ -34,9 +34,12 @@ io.on("connection", (socket) => {
   console.log("Connected to socket");
   console.log(socket.id);
 
-  socket.on("joinRoom", (roomCode) => {
+  socket.on("joinRoom", (data) => {
+    const { roomCode, playerName } = data;
     socket.join(roomCode);
-    socket.to(roomCode).emit("playerJoined", socket.id);
+    socket.to(roomCode).emit("playerJoined", { socketId: socket.id, playerName });
+    socket.emit("roomJoined", roomCode);
+    console.log(`Socket ${socket.id} joined room ${roomCode}`);
   });
 
   socket.on("leaveRoom", (roomCode) => {
