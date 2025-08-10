@@ -69,15 +69,15 @@ const ChessRoomMenu: React.FC = () => {
     if (player1Name.trim()) {
       createRoom(player1Name);
       setShowCreateRoom(true);
-      console.log("Creating room with code:", roomCode, "Player:", player1Name);
+      console.log("Creating room with code:", generatedRoomCode, "Player:", player1Name);
     }
   };
 
   const handleJoinRoom = () => {
-    if (player1Name.trim() && roomCode.trim()) {
-      joinRoom(roomCode, player1Name);
+    if (player1Name.trim() && generatedRoomCode.trim()) {
+      joinRoom(generatedRoomCode, player1Name);
       setShowJoinRoom(true);
-      console.log("Joining room:", roomCode, "Player:", player1Name);
+      console.log("Joining room:", generatedRoomCode, "Player:", player1Name);
       // Handle join room logic here
     }
   };

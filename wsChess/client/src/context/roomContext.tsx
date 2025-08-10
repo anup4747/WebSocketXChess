@@ -38,6 +38,11 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       setGeneratedRoomCode(code);
     });
 
+    socket.on("leaveRoom", (code: string) => {
+      console.log("Room Closed:", code);
+      setGeneratedRoomCode("");
+    });
+
     return () => {
       socket?.off("roomCreated");
       socket?.off("roomJoined");

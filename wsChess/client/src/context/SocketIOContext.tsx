@@ -3,18 +3,14 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 import { io, Socket } from "socket.io-client";
 
 type ServerToClientEvents = {
-  // Define your inbound socket events here, e.g.
   updateBoard: (data: any) => void;
   playerJoined: (playerName: string) => void;
-  // add more as needed
 };
 
 type ClientToServerEvents = {
-  // Define your outbound socket events with payloads here, e.g.
   makeMove: (moveData: any) => void;
   joinRoom: (roomCode: string, playerName: string) => void;
   leaveRoom: () => void;
-  // add more as needed
 };
 
 type SocketContextType = {
@@ -42,7 +38,7 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     // Initialize socket connection
-    const socket = io("http://localhost:3000"); // <-- replace with your server URL
+    const socket = io("http://localhost:3000"); 
     socketRef.current = socket;
     
     socket.on("connect", () => {
@@ -55,7 +51,6 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.log("Socket.IO disconnected");
     });
 
-    // Room events
     socket.on("roomCreated", (code) => {
       console.log("Room created:", code);
       // e.g. update RoomContext generatedRoomCode
@@ -73,11 +68,14 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.log("Player left:", playerName);
     });
 
+    socket.on("leaveRoom", (code) => {
+      console.log("Room closed", code);
+    });
+
      socket.on("error", (msg) => {
       console.warn("Server error:", msg);
     });
 
-    // Example server event handlers: add your own here if needed
     socket.on("updateBoard", (data) => {
       console.log("Received updateBoard event", data);
       // You may want to emit a React event or context update here
@@ -88,7 +86,6 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     };
   }, []);
 
-  // Generic send event function
   const sendEvent = <K extends keyof ClientToServerEvents>(
     eventName: K,
     payload: Parameters<ClientToServerEvents[K]>[0]
