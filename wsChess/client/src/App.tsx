@@ -36,7 +36,7 @@ const AppContent: React.FC = () => {
     <>
       {isLoading && (
         <div
-          className={`fixed inset-0 ${themeClasses} flex items-center justify-center z-50`}
+          className={`fixed inset-0 ${themeClasses} select-none flex items-center justify-center z-50`}
         >
           <motion.div
             className="bg-gradient-to-r from-cyan-400 to-pink-500 bg-clip-text text-5xl sm:text-6xl lg:text-7xl font-bold font-mono mb-2"
