@@ -32,29 +32,29 @@ Clone the Repository:
 
 ```git clone https://github.com/anup4747/WebSocketXChess.git```
 
-```cd wsChess/client```
+```cd client```
 
 Install Dependencies for frontend:
 
 ```npm install```
 
-```cd wsChess/client```
+```cd client```
 
 Install Dependencies for Websocket:
 
-```cd ~/wsChess/server```
+```cd server```
 
 ```npm install```
 
 Run the frontend
 
-```cd ~/wsChess/client```
+```cd client```
 
 ```npm run dev```
 
 Run the websicket
 
-```cd ~/wsChess/server```
+```cd server```
 
 ```npm start```
 
