@@ -1,6 +1,9 @@
 # Chess Game with React and WebSocket
 
-[Screencast from 07-21-2025 08:20:31 PM.webm](https://github.com/user-attachments/assets/ed63c6bb-031c-40c5-bd33-94fd19fb3db1)
+
+https://github.com/user-attachments/assets/3ff27c9b-4c3d-461a-b41f-a4fc3a239c19
+
+
 
 A real-time multiplayer chess game built with React for the frontend and WebSocket for real-time communication, allowing friends to create or join rooms and play chess online. The project also supports offline play and includes a modular component structure for a seamless user experience.
 Table of Contents
