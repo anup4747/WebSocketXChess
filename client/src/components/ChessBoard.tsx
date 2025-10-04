@@ -7,7 +7,6 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { calculatePoints } from "../context/pointsContext";
 import { usePoitnsContext } from "../context/pointsContext";
-import { initialBoard } from "../utils/initialBoardState";
 
 gsap.registerPlugin(useGSAP);
 
@@ -20,11 +19,11 @@ const Chessboard: React.FC = () => {
   const { board, turn, selected, updateBoard } = useBoardStateContext();
 
   useEffect(() => {
-    const { whitePoints, blackPoints } = calculatePoints(initialBoard);
+    const { whitePoints, blackPoints } = calculatePoints(board);
     setWhitePoints(whitePoints);
     setBlackPoints(blackPoints);
 
-  },[setBlackPoints, setWhitePoints]);
+  },[board]);
 
   const handleClick = (row: number, col: number) => {
 
