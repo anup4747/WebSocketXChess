@@ -1,5 +1,8 @@
 // context/roomContext.tsx
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePlayerNameContext } from "./playerName";
+import { useGameModeContext } from "./gameModeContext";
 import { useSocketIO } from "./SocketIOContext";
 
 interface RoomContextType  {
@@ -24,6 +27,9 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { socket, createRoom: createRoomEmit, joinRoom: joinRoomEmit, leaveRoom: leaveRoomEmit } = useSocketIO();
   const [generatedRoomCode, setGeneratedRoomCode] = useState("");
+  const navigate = useNavigate();
+  const { setPlayer1Name, setPlayer2Name } = usePlayerNameContext();
+  const { setGameMode } = useGameModeContext();
 
   useEffect(() => {
     if (!socket) return;
@@ -33,10 +39,21 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Successfully created:", payload.roomCode);
     });
 
-    socket.on("roomJoined", (payload: { roomCode: string }) => {
-      setGeneratedRoomCode(payload.roomCode);
-      console.log("Successfully joined:", payload.roomCode);
-    });
+    socket.on(
+      "roomJoined",
+      (payload: { roomCode: string; color?: "white" | "black"; players?: Array<{ socketId: string; playerName: string; color: "white" | "black" }> }) => {
+        setGeneratedRoomCode(payload.roomCode);
+        if (payload.players && payload.players.length) {
+          const white = payload.players.find((p) => p.color === "white");
+          const black = payload.players.find((p) => p.color === "black");
+          if (white?.playerName) setPlayer1Name(white.playerName);
+          if (black?.playerName) setPlayer2Name(black.playerName);
+          setGameMode("multi");
+          navigate("/playmulti");
+        }
+        console.log("Successfully joined:", payload.roomCode);
+      }
+    );
 
     socket.on("leaveRoom", (code: string) => {
       setGeneratedRoomCode("");

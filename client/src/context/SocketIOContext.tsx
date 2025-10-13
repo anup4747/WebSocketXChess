@@ -47,6 +47,10 @@ interface SocketContextType {
   createRoom: (playerName?: string) => void;
   joinRoom: (roomCode: string, playerName: string) => void;
   leaveRoom: (roomCode: string) => void;
+  sendEvent: <K extends keyof ClientToServerEvents>(
+    eventName: K,
+    payload: Parameters<ClientToServerEvents[K]>[0]
+  ) => void;
 };
 
 const SocketIOContext = createContext<SocketContextType | undefined>(undefined);
@@ -124,8 +128,19 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
+  const sendEvent = <K extends keyof ClientToServerEvents>(
+    eventName: K,
+    payload: Parameters<ClientToServerEvents[K]>[0]
+  ) => {
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit(eventName, payload);
+    } else {
+      console.warn("Socket.IO not connected. Cannot send event:", eventName);
+    }
+  };
+
   return (
-    <SocketIOContext.Provider value={{ socket: socketRef.current, isConnected, createRoom, joinRoom, leaveRoom }}>
+    <SocketIOContext.Provider value={{ socket: socketRef.current, isConnected, createRoom, joinRoom, leaveRoom, sendEvent }}>
       {children}
     </SocketIOContext.Provider>
   );

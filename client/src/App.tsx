@@ -67,6 +67,7 @@ const AppContent: React.FC = () => {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Menu />} />
             <Route path="/playoffline" element={<PlayChess />} />
+            <Route path="/playmulti" element={<PlayChess />} />
             <Route path="/construction" element={<InConstuction />} />
             <Route path="/roommenu" element={<ChessRoomMenu />} />
             <Route path="/setting" element={<ChessSettingsPage />} />
