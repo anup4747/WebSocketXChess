@@ -1,12 +1,12 @@
 TO DO'S 
 
-- adjust all css according screen
-- make all responciveeness withiout tailwind 
-- change points according to board state
 - add section of which pieces are removed or killed 
 - add timer (optional)
 - add context for game mode 
 - error in joining room
+
+- there is an bug when i create rooom then it automatically renders the the first player to the game it does not wait 
+- if we hit http://localhost:5173/playmulti it renders without  checking the room is exist or not
 
 - create a room to play with websocket
 - if user is offline for 1 min it will stay still and then the room will deleted automatically afterwards
