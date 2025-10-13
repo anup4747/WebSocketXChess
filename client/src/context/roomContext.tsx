@@ -22,20 +22,20 @@ export const useRoomContext = () => {
 export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { socket, sendEvent } = useSocketIO();
+  const { socket, createRoom: createRoomEmit, joinRoom: joinRoomEmit, leaveRoom: leaveRoomEmit } = useSocketIO();
   const [generatedRoomCode, setGeneratedRoomCode] = useState("");
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("roomCreated", (code: string) => {
-      setGeneratedRoomCode(code);
-      console.log("Successfully created:", code);
+    socket.on("roomCreated", (payload: { roomCode: string }) => {
+      setGeneratedRoomCode(payload.roomCode);
+      console.log("Successfully created:", payload.roomCode);
     });
 
-    socket.on("roomJoined", (code: string) => {
-      setGeneratedRoomCode(code);
-      console.log("Successfully joined:", code);
+    socket.on("roomJoined", (payload: { roomCode: string }) => {
+      setGeneratedRoomCode(payload.roomCode);
+      console.log("Successfully joined:", payload.roomCode);
     });
 
     socket.on("leaveRoom", (code: string) => {
@@ -43,8 +43,8 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log("Room Closed:", code);
     });
 
-    socket.on("error", (message: string) => {
-      console.error("Error:", message);
+    socket.on("error", (message: { message: string }) => {
+      console.error("Error:", message.message);
     });
 
     return () => {
@@ -56,16 +56,16 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [socket]);
 
   const createRoom = (playerName: string) => {
-    sendEvent("createRoom", playerName);
+    createRoomEmit(playerName);
   };
 
   const joinRoom = (code: string, playerName: string) => {
-    sendEvent("joinRoom", { roomCode: code, playerName });
+    joinRoomEmit(code, playerName);
   };
 
   const leaveRoom = () => {
     if (generatedRoomCode) {
-      sendEvent("leaveRoom", generatedRoomCode);
+      leaveRoomEmit(generatedRoomCode);
       setGeneratedRoomCode("");
     }
   };

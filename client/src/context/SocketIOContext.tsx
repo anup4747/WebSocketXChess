@@ -2,24 +2,51 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
+type PlayerColor = "white" | "black";
+
+interface RoomCreatedPayload {
+  roomCode: string;
+}
+
+interface RoomJoinedPayload {
+  roomCode: string;
+  color: PlayerColor;
+  players: Array<{ socketId: string; playerName: string; color: PlayerColor }>;
+}
+
+interface PlayerJoinedPayload {
+  socketId: string;
+  playerName: string;
+  color: PlayerColor;
+}
+
+interface RoomErrorPayload {
+  code: "ROOM_NOT_FOUND" | "ROOM_FULL" | "INVALID_REQUEST";
+  message: string;
+}
+
 interface ServerToClientEvents  {
   updateBoard: (data: any) => void;
-  playerJoined: (playerName: string) => void;
+  playerJoined: (payload: PlayerJoinedPayload) => void;
+  roomCreated: (payload: RoomCreatedPayload) => void;
+  roomJoined: (payload: RoomJoinedPayload) => void;
+  playerLeft: (socketId: string) => void;
+  error: (payload: RoomErrorPayload) => void;
 };
 
 interface ClientToServerEvents  {
   makeMove: (moveData: any) => void;
-  joinRoom: (roomCode: string, playerName: string) => void;
-  leaveRoom: () => void;
+  joinRoom: (payload: { roomCode: string; playerName: string }) => void;
+  leaveRoom: (roomCode: string) => void;
+  createRoom: (playerName?: string) => void;
 };
 
 interface SocketContextType {
   socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
   isConnected: boolean;
-  sendEvent: <K extends keyof ClientToServerEvents>(
-    eventName: K,
-    payload: Parameters<ClientToServerEvents[K]>[0]
-  ) => void;
+  createRoom: (playerName?: string) => void;
+  joinRoom: (roomCode: string, playerName: string) => void;
+  leaveRoom: (roomCode: string) => void;
 };
 
 const SocketIOContext = createContext<SocketContextType | undefined>(undefined);
@@ -37,7 +64,6 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
   useEffect(() => {
-    // Initialize socket connection
     const socket = io("http://localhost:3000"); 
     socketRef.current = socket;
     
@@ -51,54 +77,55 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.log("Socket.IO disconnected");
     });
 
-    socket.on("roomCreated", (code) => {
-      console.log("Room created:", code);
-      // e.g. update RoomContext generatedRoomCode
+    socket.on("roomCreated", (payload) => {
+      console.log("Room created:", payload.roomCode);
     });
 
-    socket.on("roomJoined", (code) => {
-      console.log("Joined room:", code);
+    socket.on("roomJoined", (payload) => {
+      console.log("Joined room:", payload.roomCode, "as", payload.color, payload.players);
     });
 
-    socket.on("playerJoined", (playerName) => {
-      console.log("Player joined:", playerName);
+    socket.on("playerJoined", (payload) => {
+      console.log("Player joined:", payload.playerName, payload.color);
     });
 
-    socket.on("playerLeft", (playerName) => {
-      console.log("Player left:", playerName);
+    socket.on("playerLeft", (socketId) => {
+      console.log("Player left:", socketId);
     });
 
-    socket.on("leaveRoom", (code) => {
-      console.log("Room closed", code);
-    });
-
-     socket.on("error", (msg) => {
+    socket.on("error", (msg) => {
       console.warn("Server error:", msg);
     });
 
     socket.on("updateBoard", (data) => {
       console.log("Received updateBoard event", data);
-      // You may want to emit a React event or context update here
     });
-1
+
     return () => {
       socket.disconnect();
     };
   }, []);
 
-  const sendEvent = <K extends keyof ClientToServerEvents>(
-    eventName: K,
-    payload: Parameters<ClientToServerEvents[K]>[0]
-  ) => {
+  const createRoom = (playerName?: string) => {
     if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit(eventName, payload);
-    } else {
-      console.warn("Socket.IO not connected. Cannot send event:", eventName);
+      socketRef.current.emit("createRoom", playerName);
+    }
+  };
+
+  const joinRoom = (roomCode: string, playerName: string) => {
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit("joinRoom", { roomCode, playerName });
+    }
+  };
+
+  const leaveRoom = (roomCode: string) => {
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit("leaveRoom", roomCode);
     }
   };
 
   return (
-    <SocketIOContext.Provider value={{ socket: socketRef.current, isConnected, sendEvent }}>
+    <SocketIOContext.Provider value={{ socket: socketRef.current, isConnected, createRoom, joinRoom, leaveRoom }}>
       {children}
     </SocketIOContext.Provider>
   );

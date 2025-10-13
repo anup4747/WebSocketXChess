@@ -1,6 +1,8 @@
 # Node.js and npm
 node_modules/
 node_modules
+.tsbuildinfo
+dist
 npm-debug.log
 package-lock.json
 yarn.lock
