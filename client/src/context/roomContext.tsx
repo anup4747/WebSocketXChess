@@ -66,9 +66,9 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     );
 
-    socket.on("leaveRoom", (code: string) => {
+    socket.on("playerLeft", (_socketId: string) => {
       setGeneratedRoomCode("");
-      console.log("Room Closed:", code);
+      console.log("A player left the room");
     });
 
     socket.on("error", (message: { message: string }) => {
@@ -78,7 +78,7 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       socket?.off("roomCreated");
       socket?.off("roomJoined");
-      socket?.off("leaveRoom");
+      socket?.off("playerLeft");
       socket?.off("error");
       socket?.off("bothReady");
     };

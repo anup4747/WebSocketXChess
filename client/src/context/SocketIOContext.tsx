@@ -32,6 +32,7 @@ interface ServerToClientEvents  {
   roomJoined: (payload: RoomJoinedPayload) => void;
   playerLeft: (socketId: string) => void;
   error: (payload: RoomErrorPayload) => void;
+  bothReady: (payload: { roomCode: string; players: Array<{ socketId: string; playerName: string; color: PlayerColor }> }) => void;
 };
 
 interface ClientToServerEvents  {
@@ -133,7 +134,8 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     payload: Parameters<ClientToServerEvents[K]>[0]
   ) => {
     if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit(eventName, payload);
+      // Spread to satisfy emit's variadic parameter typing
+      (socketRef.current.emit as any)(eventName, payload);
     } else {
       console.warn("Socket.IO not connected. Cannot send event:", eventName);
     }
