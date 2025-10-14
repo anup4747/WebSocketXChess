@@ -43,15 +43,26 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       "roomJoined",
       (payload: { roomCode: string; color?: "white" | "black"; players?: Array<{ socketId: string; playerName: string; color: "white" | "black" }> }) => {
         setGeneratedRoomCode(payload.roomCode);
+        // Don't navigate yet; wait for bothReady so creators don't auto-navigate
         if (payload.players && payload.players.length) {
           const white = payload.players.find((p) => p.color === "white");
           const black = payload.players.find((p) => p.color === "black");
           if (white?.playerName) setPlayer1Name(white.playerName);
           if (black?.playerName) setPlayer2Name(black.playerName);
-          setGameMode("multi");
-          navigate("/playmulti");
         }
         console.log("Successfully joined:", payload.roomCode);
+      }
+    );
+
+    socket.on(
+      "bothReady",
+      (payload: { roomCode: string; players: Array<{ socketId: string; playerName: string; color: "white" | "black" }> }) => {
+        const white = payload.players.find((p) => p.color === "white");
+        const black = payload.players.find((p) => p.color === "black");
+        if (white?.playerName) setPlayer1Name(white.playerName);
+        if (black?.playerName) setPlayer2Name(black.playerName);
+        setGameMode("multi");
+        navigate("/playmulti");
       }
     );
 
@@ -69,6 +80,7 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
       socket?.off("roomJoined");
       socket?.off("leaveRoom");
       socket?.off("error");
+      socket?.off("bothReady");
     };
   }, [socket]);
 

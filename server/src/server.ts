@@ -82,6 +82,14 @@ io.on("connection", (socket: Socket) => {
     };
     socket.to(roomCode).emit("playerJoined", joinedBroadcast);
 
+    // If room now has 2 players, notify both clients they're ready to start
+    if (roomPlayers.length === 2) {
+      io.to(roomCode).emit("bothReady", {
+        roomCode,
+        players: roomPlayers.map((p) => ({ socketId: p.socketId, playerName: p.playerName, color: p.color })),
+      });
+    }
+
     console.log(`Socket ${socket.id} joined room ${roomCode} as ${assignedColor}`);
   });
 
@@ -114,7 +122,8 @@ io.on("connection", (socket: Socket) => {
       players: [{ socketId: player.socketId, playerName: player.playerName, color: "white" }],
     };
     socket.emit("roomJoined", joinedPayload);
-    console.log(`Room ${roomCode} created by socket ${socket.id}`);
+    // Do not auto-navigate creator; wait for bothReady on the client
+    console.log(`Room ${roomCode} created by player ${player.playerName} socket ${socket.id}`);
   });
 
   socket.on("disconnect", () => {
