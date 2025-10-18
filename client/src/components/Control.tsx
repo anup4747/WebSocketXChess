@@ -4,13 +4,19 @@ import type { ControlProps } from "../types/types";
 import { LogOut, RotateCcw, Sun, Moon } from "lucide-react";
 import { useGameThemeContext } from "../context/themeContext";
 import { useBoardStateContext } from "../context/boardContext";
+import { useRoomContext } from "../context/roomContext";
 
 const Controls: React.FC<ControlProps> = ({
   resetGame,
 }) => {
-  const {isDark, buttonClasses, cardClasses, primaryButtonClasses, toggleTheme} = useGameThemeContext();
-  const {turn} = useBoardStateContext()
-  
+  const { isDark, buttonClasses, cardClasses, primaryButtonClasses, toggleTheme } = useGameThemeContext();
+  const { turn } = useBoardStateContext()
+  const { leaveRoom, resetRoom } = useRoomContext();
+  const resetMenu = () => {
+    leaveRoom();
+    resetRoom();
+  };
+
   return (
     <section
       className={`mt-3 px-4 py-4 sm:px-6 sm:py-6 sm:p-6 w-full max-w-[710px] sm:w-[90vw] sm:max-w-[610px] md:max-w-[520px] rounded-2xl border transition-all duration-300 ${cardClasses}`}
@@ -18,11 +24,10 @@ const Controls: React.FC<ControlProps> = ({
       <div className="flex items-center justify-between mb-4 gap-4">
         <div className="flex items-center space-x-3">
           <div
-            className={`w-3 h-3 rounded-full ${
-              turn === "white"
-                ? "bg-gray-200 border-2 border-gray-800"
-                : "bg-gray-800 border-2 border-gray-300"
-            }`}
+            className={`w-3 h-3 rounded-full ${turn === "white"
+              ? "bg-gray-200 border-2 border-gray-800"
+              : "bg-gray-800 border-2 border-gray-300"
+              }`}
           ></div>
           <p className={`text-sm sm:text-base md:text-lg font-mono font-bold `}>
             Turn: <span className="capitalize">{turn}</span>
@@ -49,6 +54,7 @@ const Controls: React.FC<ControlProps> = ({
 
         <Link to="/" className="flex-1">
           <button
+            onClick={resetMenu}
             className={`w-full flex items-center justify-center gap-2 px-4 py-3 sm:py-3.5 md:py-4 lg:py-3 rounded-xl font-mono font-bold cursor-pointer transition-colors ${buttonClasses}`}
           >
             <LogOut className="w-4 h-4" />

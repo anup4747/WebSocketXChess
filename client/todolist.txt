@@ -3,9 +3,9 @@ TO DO'S
 - add section of which pieces are removed or killed 
 - add timer (optional)
 - add context for game mode 
-- error in joining room
 
-- there is an bug when i create rooom then it automatically renders the the first player to the game it does not wait 
+- solved the player waiting issue but when i reload the page it does not join the room and still renders the page 
+- remove unessesary code and add more comments 
 - if we hit http://localhost:5173/playmulti it renders without  checking the room is exist or not
 
 - create a room to play with websocket

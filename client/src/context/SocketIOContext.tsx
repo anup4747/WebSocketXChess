@@ -68,12 +68,14 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
+  // trigger/capture events from client 
   useEffect(() => {
     const socket = io("http://localhost:3000"); 
     socketRef.current = socket;
     
     socket.on("connect", () => {
       setIsConnected(true);
+      // console.log(socketRef.current)
       console.log("Socket.IO connected:", socket.id);
     });
 
@@ -111,24 +113,28 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     };
   }, []);
 
+  // create room function which emits the "createRoom" event to the server to create room 
   const createRoom = (playerName?: string) => {
     if (socketRef.current && socketRef.current.connected) {
       socketRef.current.emit("createRoom", playerName);
     }
   };
 
+  // join room function which emits the "joinRoom" event to the server to join room 
   const joinRoom = (roomCode: string, playerName: string) => {
     if (socketRef.current && socketRef.current.connected) {
       socketRef.current.emit("joinRoom", { roomCode, playerName });
     }
   };
 
+  // leave room function which emits the "leaveRoom" event to the server to leave room 
   const leaveRoom = (roomCode: string) => {
     if (socketRef.current && socketRef.current.connected) {
       socketRef.current.emit("leaveRoom", roomCode);
     }
   };
 
+  // send event function which emits the event to the server to send event 
   const sendEvent = <K extends keyof ClientToServerEvents>(
     eventName: K,
     payload: Parameters<ClientToServerEvents[K]>[0]
