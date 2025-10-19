@@ -68,7 +68,11 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // trigger/capture events from client 
   useEffect(() => {
-    const socket = io("http://localhost:3000"); 
+    // set your custom ip address wifi or play locally in pc by setting the .env file
+    const serverUrl = (import.meta as any).env?.VITE_SERVER_URL || `${window.location.protocol}//${window.location.hostname}:3000`;
+    // or use
+    // const serverUrl = "http://localhost:3000/"
+    const socket = io(serverUrl); 
     socketRef.current = socket;
     
     socket.on("connect", () => {

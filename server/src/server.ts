@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import dotenv from "dotenv";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import {
@@ -10,13 +11,15 @@ import {
   RoomJoinedPayload,
 } from "./types";
 
+dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: CLIENT_ORIGIN,
   },
 });
 
