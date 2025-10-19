@@ -22,12 +22,12 @@ export const BoardStateProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [boardState, setBoardState] = useState({
     board: initialBoard,
-    selected: null,
-    turn: "white",
+    selected: null as { row: number; col: number } | null,
+    turn: "white" as Color,
   });
 
   const resetGame = () => {
-    setBoardState({ board: initialBoard, selected: null, turn: "white" });
+    setBoardState({ board: initialBoard, selected: null, turn: "white" as Color });
   };
 
   const updateBoard = (newBoard: (Piece | null)[][], newTurn: Color, newSelected: { row: number; col: number } | null) => {
