@@ -1,5 +1,5 @@
 // src/context/SocketIOContext.tsx
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
 type PlayerColor = "white" | "black";
@@ -44,7 +44,6 @@ interface ClientToServerEvents  {
 
 interface SocketContextType {
   socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
-  isConnected: boolean;
   createRoom: (playerName?: string) => void;
   joinRoom: (roomCode: string, playerName: string) => void;
   leaveRoom: (roomCode: string) => void;
@@ -65,7 +64,6 @@ export const useSocketIO = () => {
 };
 
 export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
   // trigger/capture events from client 
@@ -74,13 +72,11 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     socketRef.current = socket;
     
     socket.on("connect", () => {
-      setIsConnected(true);
       // console.log(socketRef.current)
       console.log("Socket.IO connected:", socket.id);
     });
 
     socket.on("disconnect", () => {
-      setIsConnected(false);
       console.log("Socket.IO disconnected");
     });
 
@@ -148,7 +144,7 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <SocketIOContext.Provider value={{ socket: socketRef.current, isConnected, createRoom, joinRoom, leaveRoom, sendEvent }}>
+    <SocketIOContext.Provider value={{ socket: socketRef.current, createRoom, joinRoom, leaveRoom, sendEvent }}>
       {children}
     </SocketIOContext.Provider>
   );
