@@ -1,5 +1,5 @@
 // src/context/SocketIOContext.tsx
-import React, { createContext, useContext, useEffect, useRef } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 type PlayerColor = "white" | "black";
@@ -64,7 +64,7 @@ export const useSocketIO = () => {
 };
 
 export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const socketRef = useRef<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
+  const [socket, setSocket] = useState<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
   // trigger/capture events from client 
   useEffect(() => {
@@ -72,65 +72,64 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const serverUrl = (import.meta as any).env?.VITE_SERVER_URL || `${window.location.protocol}//${window.location.hostname}:3000`;
     // or use
     // const serverUrl = "http://localhost:3000/"
-    const socket = io(serverUrl); 
-    socketRef.current = socket;
+    const newSocket = io(serverUrl); 
+    setSocket(newSocket);
     
-    socket.on("connect", () => {
-      // console.log(socketRef.current)
-      console.log("Socket.IO connected:", socket.id);
+    newSocket.on("connect", () => {
+      console.log("Socket.IO connected:", newSocket.id);
     });
 
-    socket.on("disconnect", () => {
+    newSocket.on("disconnect", () => {
       console.log("Socket.IO disconnected");
     });
 
-    socket.on("roomCreated", (payload) => {
-      console.log("Room created:", payload.roomCode);
-    });
+    // socket.on("roomCreated", (payload) => {
+    //   console.log("Room created:", payload.roomCode);
+    // });
 
-    socket.on("roomJoined", (payload) => {
+    newSocket.on("roomJoined", (payload) => {
       console.log("Joined room:", payload.roomCode, "as", payload.color, payload.players);
     });
 
-    socket.on("playerJoined", (payload) => {
+    newSocket.on("playerJoined", (payload) => {
       console.log("Player joined:", payload.playerName, payload.color);
     });
 
-    socket.on("playerLeft", (socketId) => {
+    newSocket.on("playerLeft", (socketId) => {
       console.log("Player left:", socketId);
     });
 
-    socket.on("error", (msg) => {
+    newSocket.on("error", (msg) => {
       console.warn("Server error:", msg);
     });
 
-    socket.on("updateBoard", (data) => {
+    newSocket.on("updateBoard", (data) => {
       console.log("Received updateBoard event", data);
     });
 
     return () => {
-      socket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
 
   // create room function which emits the "createRoom" event to the server to create room 
   const createRoom = (playerName?: string) => {
-    if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit("createRoom", playerName);
+    if (socket && socket.connected) {
+      socket.emit("createRoom", playerName);
     }
   };
 
   // join room function which emits the "joinRoom" event to the server to join room 
   const joinRoom = (roomCode: string, playerName: string) => {
-    if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit("joinRoom", { roomCode, playerName });
+    if (socket && socket.connected) {
+      socket.emit("joinRoom", { roomCode, playerName });
     }
   };
 
   // leave room function which emits the "leaveRoom" event to the server to leave room 
   const leaveRoom = (roomCode: string) => {
-    if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit("leaveRoom", roomCode);
+    if (socket && socket.connected) {
+      socket.emit("leaveRoom", roomCode);
     }
   };
 
@@ -139,16 +138,16 @@ export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     eventName: K,
     payload: Parameters<ClientToServerEvents[K]>[0]
   ) => {
-    if (socketRef.current && socketRef.current.connected) {
+    if (socket && socket.connected) {
       // Spread to satisfy emit's variadic parameter typing
-      (socketRef.current.emit as any)(eventName, payload);
+      (socket.emit as any)(eventName, payload);
     } else {
       console.warn("Socket.IO not connected. Cannot send event:", eventName);
     }
   };
 
   return (
-    <SocketIOContext.Provider value={{ socket: socketRef.current, createRoom, joinRoom, leaveRoom, sendEvent }}>
+    <SocketIOContext.Provider value={{ socket, createRoom, joinRoom, leaveRoom, sendEvent }}>
       {children}
     </SocketIOContext.Provider>
   );

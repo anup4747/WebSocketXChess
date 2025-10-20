@@ -32,10 +32,12 @@ export const RoomProvider: React.FC<{ children: React.ReactNode }> = ({
   const { setGameMode } = useGameModeContext();
 
   useEffect(() => {
+    console.log(socket)
     if (!socket) return;
 
     socket.on("roomCreated", (payload: { roomCode: string }) => {
       setGeneratedRoomCode(payload.roomCode);
+      console.log("room ccccc ", payload.roomCode)
       console.log("Successfully created:", payload.roomCode);
     });
 
