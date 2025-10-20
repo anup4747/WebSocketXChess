@@ -15,8 +15,8 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const HOST = process.env.HOST || process.env.SERVER_HOST || "0.0.0.0";
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
-
 const io = new Server(httpServer, {
   cors: {
     origin: CLIENT_ORIGIN,
@@ -145,8 +145,8 @@ io.on("connection", (socket: Socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+httpServer.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
 
