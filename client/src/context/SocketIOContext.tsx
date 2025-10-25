@@ -64,6 +64,7 @@ export const useSocketIO = () => {
 };
 
 export const SocketIOProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // socket state for keep changing the socket 
   const [socket, setSocket] = useState<Socket<ServerToClientEvents, ClientToServerEvents> | null>(null);
 
   // trigger/capture events from client 

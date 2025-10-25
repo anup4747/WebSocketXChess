@@ -45,8 +45,7 @@ function generateRoomCodeUnique(): string {
 }
 
 io.on("connection", (socket: Socket) => {
-  console.log("Connected to socket");
-  console.log(socket.id);
+  console.log("Connected to socket : ", socket.id);
 
   socket.on("joinRoom", (data: JoinRoomPayload) => {
     const { roomCode, playerName } = data;
